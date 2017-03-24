@@ -1,0 +1,17 @@
+<div class="mat-table-container">
+  <table class="mat-data-table">
+    <thead>
+    <tr>
+      <th *ngFor="let column of columns"
+          [class.mat-numeric-column]="column.numeric">
+        <span mdTooltip="{{column.tooltip}}">{{column.title}}</span>
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr mdDataTableRow *ngFor="let row of rows"
+        [row]="row" [columns]="columns">
+    </tr>
+    </tbody>
+  </table>
+</div>

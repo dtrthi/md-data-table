@@ -1,3 +1,39 @@
 <h1>
   {{title}}
 </h1>
+
+<md-card class="data-table-card" style="width: 1011px">
+  <md-data-table [data]="data">
+    <md-data-table-column title="Dessert (100g serving)"
+                          field="name"
+                          tooltip="Dessert (100g serving)"></md-data-table-column>
+    <md-data-table-column title="Calories"
+                          field="calories"
+                          numeric="true"
+                          tooltip="Calories"></md-data-table-column>
+    <md-data-table-column title="Fat (g)"
+                          field="fat"
+                          numeric="true"
+                          tooltip="Fat (g)"></md-data-table-column>
+    <md-data-table-column title="Carbs (g)"
+                          field="carbs"
+                          numeric="true"
+                          tooltip="Carbs (g)"></md-data-table-column>
+    <md-data-table-column title="Protein (g)"
+                          field="protein"
+                          numeric="true"
+                          tooltip="Protein (g)"></md-data-table-column>
+    <md-data-table-column title="Sodium (mg)"
+                          field="sodium"
+                          numeric="true"
+                          tooltip="Sodium (mg)"></md-data-table-column>
+    <md-data-table-column title="Calcium (%)"
+                          field="calcium"
+                          numeric="true"
+                          tooltip="Calcium (%)"></md-data-table-column>
+    <md-data-table-column title="Iron (%)"
+                          field="iron"
+                          numeric="true"
+                          tooltip="Iron (%)"></md-data-table-column>
+  </md-data-table>
+</md-card>

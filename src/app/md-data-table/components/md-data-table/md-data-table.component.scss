@@ -1,0 +1,111 @@
+$font-family: Roboto, "Helvetica Neue", sans-serif;
+
+$border-color: rgba(0, 0, 0, .12);
+
+$content-font-size: 13px;
+$content-color: rgba(0, 0, 0, .87);
+$content-height: 48px;
+
+$header-font-size: 12px;
+$header-font-weight: 500;
+$header-color: rgba(0, 0, 0, .54);
+$header-height: 56px;
+
+$row-hover-color: #eeeeee;
+$row-selected-color: #f5f5f5;
+
+$footer-font-size: 12px;
+$footer-color: rgba(0, 0, 0, .54);
+$footer-height: 56px;
+
+.mat-table-container {
+  max-width: 100%;
+  display: block;
+  overflow-x: auto;
+  font-family: $font-family;
+
+  .mat-data-table {
+    width: 100%;
+    overflow: hidden;
+
+    border-width: 1px;
+    border-style: solid;
+    border-color: $border-color;
+    border-collapse: collapse;
+    white-space: nowrap;
+
+    text-align: center;
+    tr {
+      position: relative;
+      text-overflow: ellipsis;
+      line-height: 24px;
+      letter-spacing: 0;
+      font-size: 12px;
+      box-sizing: border-box;
+    }
+
+    thead {
+      tr {
+        border: none;
+
+        font-size: $header-font-size;
+        font-weight: $header-font-weight;
+        color: $header-color;
+
+        height: $header-height;
+
+        th {
+          border: none;
+
+          cursor: default;
+
+          text-align: left;
+          padding: 0 12px;
+
+          &:first-of-type {
+            padding-left: 24px;
+          }
+
+          &:last-of-type {
+            padding-right: 24px;
+          }
+
+          &.mat-numeric-column {
+            text-align: right;
+          }
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        border-top: 1px solid $border-color;
+        font-size: $content-font-size;
+        color: $content-color;
+        height: $content-height;
+
+        &:hover {
+          background-color: $row-hover-color;
+        }
+
+        .selected {
+          background-color: $row-selected-color;
+        }
+      }
+    }
+
+    tfoot {
+      tr {
+        font-size: $footer-font-size;
+        color: $footer-color;
+        height: $footer-height;
+
+        td {
+          md-paginator {
+            float: right;
+          }
+        }
+      }
+    }
+  }
+}
