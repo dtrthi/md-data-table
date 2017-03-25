@@ -3,7 +3,7 @@
 </h1>
 
 <md-card class="data-table-card" style="width: 1011px">
-  <md-data-table [data]="data">
+  <md-data-table [data]="data" [total]="data?.length">
     <md-data-table-column title="Dessert (100g serving)"
                           field="name"
                           tooltip="Dessert (100g serving)"></md-data-table-column>

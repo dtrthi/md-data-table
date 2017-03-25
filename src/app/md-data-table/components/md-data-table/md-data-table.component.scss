@@ -47,7 +47,6 @@ $footer-height: 56px;
     thead {
       tr {
         border: none;
-
         font-size: $header-font-size;
         font-weight: $header-font-weight;
         color: $header-color;
@@ -96,6 +95,7 @@ $footer-height: 56px;
 
     tfoot {
       tr {
+        border-top: 1px solid $border-color;
         font-size: $footer-font-size;
         color: $footer-color;
         height: $footer-height;

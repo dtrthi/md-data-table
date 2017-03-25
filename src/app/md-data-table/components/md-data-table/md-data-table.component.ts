@@ -1,9 +1,11 @@
 import {
-  AfterContentInit, Component, ContentChildren,
-  Input, OnInit, OnChanges, SimpleChanges
+  AfterContentInit, Component, ContentChildren, EventEmitter,
+  Input, OnInit, OnChanges, Output, SimpleChanges, ViewChild
 } from '@angular/core';
 
 import { MdDataTableColumnComponent } from '../md-data-table-column/md-data-table-column.component';
+import { MdPaginatorComponent } from '../md-paginator/md-paginator.component';
+import { MdPagination } from '../../models/md-pagination';
 import { MdRowData } from '../../models/md-row-data';
 
 @Component({
@@ -13,9 +15,14 @@ import { MdRowData } from '../../models/md-row-data';
 })
 export class MdDataTableComponent implements OnInit, AfterContentInit, OnChanges {
   private rows: MdRowData[] = [];
+  private isLoading: boolean = false;
 
+  @ViewChild(MdPaginatorComponent) paginatorComponent;
   @ContentChildren(MdDataTableColumnComponent) columns;
   @Input() data: any[];
+  @Input() total: number = 0;
+
+  @Output('pageChange') onPageChange: EventEmitter<MdPagination> = new EventEmitter<MdPagination>();
 
   constructor() { }
 
@@ -39,5 +46,11 @@ export class MdDataTableComponent implements OnInit, AfterContentInit, OnChanges
         }
       );
     }
+  }
+
+  private _onPageChange() {
+    this.isLoading = true;
+    this._updateRows();
+    this.onPageChange.emit(this.paginatorComponent.currentPage);
   }
 }

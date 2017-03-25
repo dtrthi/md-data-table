@@ -13,5 +13,12 @@
         [row]="row" [columns]="columns">
     </tr>
     </tbody>
+    <tfoot>
+    <tr>
+      <td [attr.colspan]="columns.length">
+        <md-paginator [total]="total" (pageChange)="_onPageChange($event)"></md-paginator>
+      </td>
+    </tr>
+    </tfoot>
   </table>
 </div>
