@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '@angular/material';
 
 import { MdDataTableComponent } from './components/md-data-table/md-data-table.component';
@@ -11,6 +12,7 @@ import { MdPaginatorComponent } from './components/md-paginator/md-paginator.com
 @NgModule({
   imports: [
     CommonModule,
+    FlexLayoutModule,
     MaterialModule
   ],
   declarations: [

@@ -1,6 +1,16 @@
-<div class="mat-table-container">
-  <table class="mat-data-table">
-    <thead>
+<table class="mat-data-table-head" *ngIf="fixedHeader">
+  <thead>
+  <tr>
+    <th *ngFor="let column of columns"
+        [class.mat-numeric-column]="column.numeric">
+      <span mdTooltip="{{column.tooltip}}">{{column.title}}</span>
+    </th>
+  </tr>
+  </thead>
+</table>
+<div #container class="mat-table-container">
+  <table class="mat-data-table" [class.fixed-header]="fixedHeader">
+    <thead [fxHide]="fixedHeader">
     <tr>
       <th *ngFor="let column of columns"
           [class.mat-numeric-column]="column.numeric">
@@ -8,12 +18,12 @@
       </th>
     </tr>
     </thead>
-    <tbody>
+    <tbody #body>
     <tr mdDataTableRow *ngFor="let row of rows"
         [row]="row" [columns]="columns">
     </tr>
     </tbody>
-    <tfoot>
+    <tfoot *ngIf="!fixedHeader">
     <tr>
       <td [attr.colspan]="columns.length">
         <md-paginator [total]="total" (pageChange)="_onPageChange($event)"></md-paginator>
@@ -22,3 +32,12 @@
     </tfoot>
   </table>
 </div>
+<table class="mat-data-table-tail" *ngIf="fixedHeader">
+  <tfoot>
+  <tr>
+    <td [attr.colspan]="columns.length">
+      <md-paginator [total]="total" (pageChange)="_onPageChange($event)"></md-paginator>
+    </td>
+  </tr>
+  </tfoot>
+</table>

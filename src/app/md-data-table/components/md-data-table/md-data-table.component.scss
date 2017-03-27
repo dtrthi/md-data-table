@@ -18,6 +18,70 @@ $footer-font-size: 12px;
 $footer-color: rgba(0, 0, 0, .54);
 $footer-height: 56px;
 
+table {
+  border-collapse: collapse;
+
+  tr {
+    position: relative;
+    text-overflow: ellipsis;
+    line-height: 24px;
+    letter-spacing: 0;
+    font-size: 12px;
+
+    th, td {
+      box-sizing: border-box;
+    }
+  }
+
+  thead {
+    tr {
+      border: none;
+      border-bottom: 1px solid $border-color;
+      font-size: $header-font-size;
+      font-weight: $header-font-weight;
+      color: $header-color;
+      height: $header-height;
+      box-sizing: border-box;
+
+      th {
+        border: none;
+
+        cursor: default;
+
+        text-align: left;
+        padding: 0 12px;
+
+        &:first-of-type {
+          padding-left: 24px;
+        }
+
+        &:last-of-type {
+          padding-right: 24px;
+        }
+
+        &.mat-numeric-column {
+          text-align: right;
+        }
+      }
+    }
+  }
+
+  tfoot {
+    tr {
+      border-top: 1px solid $border-color;
+      font-size: $footer-font-size;
+      color: $footer-color;
+      height: $footer-height;
+
+      td {
+        md-paginator {
+          float: right;
+        }
+      }
+    }
+  }
+}
+
 .mat-table-container {
   max-width: 100%;
   display: block;
@@ -31,50 +95,14 @@ $footer-height: 56px;
     border-width: 1px;
     border-style: solid;
     border-color: $border-color;
-    border-collapse: collapse;
     white-space: nowrap;
 
+    &.fixed-header {
+      border-top-width: 0;
+      border-bottom-width: 0;
+    }
+
     text-align: center;
-    tr {
-      position: relative;
-      text-overflow: ellipsis;
-      line-height: 24px;
-      letter-spacing: 0;
-      font-size: 12px;
-      box-sizing: border-box;
-    }
-
-    thead {
-      tr {
-        border: none;
-        font-size: $header-font-size;
-        font-weight: $header-font-weight;
-        color: $header-color;
-
-        height: $header-height;
-
-        th {
-          border: none;
-
-          cursor: default;
-
-          text-align: left;
-          padding: 0 12px;
-
-          &:first-of-type {
-            padding-left: 24px;
-          }
-
-          &:last-of-type {
-            padding-right: 24px;
-          }
-
-          &.mat-numeric-column {
-            text-align: right;
-          }
-        }
-      }
-    }
 
     tbody {
       tr {
@@ -83,27 +111,16 @@ $footer-height: 56px;
         color: $content-color;
         height: $content-height;
 
+        &:first-of-type {
+          border: none;
+        }
+
         &:hover {
           background-color: $row-hover-color;
         }
 
         .selected {
           background-color: $row-selected-color;
-        }
-      }
-    }
-
-    tfoot {
-      tr {
-        border-top: 1px solid $border-color;
-        font-size: $footer-font-size;
-        color: $footer-color;
-        height: $footer-height;
-
-        td {
-          md-paginator {
-            float: right;
-          }
         }
       }
     }
