@@ -10,7 +10,7 @@
 </table>
 <div #container class="mat-table-container">
   <table class="mat-data-table" [class.fixed-header]="fixedHeader">
-    <thead [fxHide]="fixedHeader">
+    <thead *ngIf="!fixedHeader">
     <tr>
       <th *ngFor="let column of columns"
           [class.mat-numeric-column]="column.numeric">

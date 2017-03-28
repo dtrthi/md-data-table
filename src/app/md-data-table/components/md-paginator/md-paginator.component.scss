@@ -46,7 +46,6 @@ $button-color-disabled: rgba(0, 0, 0, .26);
       min-width: initial;
       padding: 0;
       border-radius: 50%;
-      background-color: snow;
 
       &:hover {
         background-color: snow;
@@ -54,6 +53,10 @@ $button-color-disabled: rgba(0, 0, 0, .26);
 
       &:disabled {
         color: $button-color-disabled;
+      }
+
+      .mat-button-ripple {
+        border-radius: 50%;
       }
     }
   }
