@@ -1,5 +1,5 @@
 {
-  "name": "md-data-table",
+  "name": "@dtrthi/md-data-table",
   "version": "0.0.0",
   "license": "MIT",
   "angular-cli": {},
@@ -10,7 +10,6 @@
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
-  "private": true,
   "dependencies": {
     "@angular/common": "^2.4.0",
     "@angular/compiler": "^2.4.0",
