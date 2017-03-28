@@ -1,6 +1,6 @@
 import { Directive, EmbeddedViewRef, Input, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
 
-import { MdDataTableColumnComponent } from '../components/md-data-table-column/md-data-table-column.component';
+import { MdDataColumnComponent } from '../components/md-data-column/md-data-column.component';
 
 @Directive({
   selector: '[mdTableCell]'
@@ -8,7 +8,7 @@ import { MdDataTableColumnComponent } from '../components/md-data-table-column/m
 export class MdTableCellDirective implements OnInit, OnDestroy {
   private childView: EmbeddedViewRef<MdTableCellDirective>;
 
-  @Input() mdTableCellColumn: MdDataTableColumnComponent;
+  @Input() mdTableCellColumn: MdDataColumnComponent;
   @Input() mdTableCellModel: any;
 
   constructor(

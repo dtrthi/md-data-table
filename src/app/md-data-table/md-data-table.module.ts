@@ -4,7 +4,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '@angular/material';
 
 import { MdDataTableComponent } from './components/md-data-table/md-data-table.component';
-import { MdDataTableColumnComponent } from './components/md-data-table-column/md-data-table-column.component';
+import { MdDataColumnComponent } from './components/md-data-column/md-data-column.component';
 import { MdDataTableRowComponent } from './components/md-data-table-row/md-data-table-row.component';
 import { MdTableCellDirective } from './directives/md-table-cell.directive';
 import { MdPaginatorComponent } from './components/md-paginator/md-paginator.component';
@@ -17,13 +17,13 @@ import { MdPaginatorComponent } from './components/md-paginator/md-paginator.com
   ],
   declarations: [
     MdDataTableComponent,
-    MdDataTableColumnComponent,
+    MdDataColumnComponent,
     MdDataTableRowComponent,
     MdTableCellDirective,
     MdPaginatorComponent
   ],
   exports: [
-    MdDataTableColumnComponent,
+    MdDataColumnComponent,
     MdDataTableComponent
   ]
 })

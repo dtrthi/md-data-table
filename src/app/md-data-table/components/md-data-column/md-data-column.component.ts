@@ -2,11 +2,11 @@ import { Component, ContentChild, Input, OnInit, TemplateRef, ViewChild } from '
 import { MdTableCellDirective } from '../../directives/md-table-cell.directive';
 
 @Component({
-  selector: 'md-data-table-column',
-  templateUrl: './md-data-table-column.component.html',
-  styleUrls: ['./md-data-table-column.component.scss']
+  selector: 'md-data-column',
+  templateUrl: './md-data-column.component.html',
+  styleUrls: ['./md-data-column.component.scss']
 })
-export class MdDataTableColumnComponent implements OnInit {
+export class MdDataColumnComponent implements OnInit {
   sortDir: 'asc' | 'desc' = null;
 
   @Input() title: string;

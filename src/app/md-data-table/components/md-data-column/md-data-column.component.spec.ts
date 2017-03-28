@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MdDataTableColumnComponent } from './md-data-table-column.component';
+import { MdDataColumnComponent } from './md-data-column.component';
 
-describe('MdDataTableColumnComponent', () => {
-  let component: MdDataTableColumnComponent;
-  let fixture: ComponentFixture<MdDataTableColumnComponent>;
+describe('MdDataColumnComponent', () => {
+  let component: MdDataColumnComponent;
+  let fixture: ComponentFixture<MdDataColumnComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MdDataTableColumnComponent ]
+      declarations: [ MdDataColumnComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MdDataTableColumnComponent);
+    fixture = TestBed.createComponent(MdDataColumnComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

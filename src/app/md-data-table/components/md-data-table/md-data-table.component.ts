@@ -3,7 +3,7 @@ import {
   Input, OnInit, OnChanges, Output, SimpleChanges, ViewChild
 } from '@angular/core';
 
-import { MdDataTableColumnComponent } from '../md-data-table-column/md-data-table-column.component';
+import { MdDataColumnComponent } from '../md-data-column/md-data-column.component';
 import { MdPaginatorComponent } from '../md-paginator/md-paginator.component';
 import { MdPagination } from '../../models/md-pagination';
 import { MdRowData } from '../../models/md-row-data';
@@ -33,7 +33,7 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterContentInit
   @ViewChild('container') container;
   @ViewChild('body') body;
   @ViewChild(MdPaginatorComponent) paginatorComponent;
-  @ContentChildren(MdDataTableColumnComponent) columns;
+  @ContentChildren(MdDataColumnComponent) columns;
   @Input() total: number = 0;
   @Input() pageSize: number|'auto' = 'auto';
 

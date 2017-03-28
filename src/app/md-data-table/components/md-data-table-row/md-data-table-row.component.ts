@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 import { MdRowData } from '../../models/md-row-data';
-import { MdDataTableColumnComponent } from '../md-data-table-column/md-data-table-column.component';
+import { MdDataColumnComponent } from '../md-data-column/md-data-column.component';
 
 @Component({
   selector: 'md-data-table-row,[md-data-table-row],[mdDataTableRow]',
@@ -10,7 +10,7 @@ import { MdDataTableColumnComponent } from '../md-data-table-column/md-data-tabl
 })
 export class MdDataTableRowComponent implements OnInit {
   @Input() row: MdRowData;
-  @Input() columns: MdDataTableColumnComponent[];
+  @Input() columns: MdDataColumnComponent[];
 
   constructor() { }
 
