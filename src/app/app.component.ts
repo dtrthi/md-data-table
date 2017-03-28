@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Http } from '@angular/http';
 
+import { MdPagination } from './md-data-table/models/md-pagination';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -8,15 +10,23 @@ import { Http } from '@angular/http';
 })
 export class AppComponent implements OnInit {
   title = 'app works!';
-  private data: Array<any>;
+  private data: Array<any>|any;
+  private total: number = 0;
 
   constructor(private http: Http) { }
 
   ngOnInit() {
-    this.http.get('assets/data.json').subscribe(
-      response => {
-        this.data = response.json();
-      }
-    );
+    this.data = this.fetchData();
+  }
+
+  fetchData() {
+    return (paging: MdPagination) => {
+      return this.http.get('assets/data.json').map(
+        response => {
+          let data = response.json();
+          return Array.isArray(data) && (this.total = data.length) && data.slice(paging.begin, paging.end + 1) || [];
+        }
+      );
+    };
   }
 }

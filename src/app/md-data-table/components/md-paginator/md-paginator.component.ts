@@ -14,12 +14,7 @@ export class MdPaginatorComponent implements OnInit {
   @Input() total: number = 0;
   @Input() ranges : number[] = [10, 25, 50, 100];
   @Input() set selectedRange(selectedRange: number) {
-    let current = this._selectedRange;
     this._selectedRange = selectedRange;
-
-    if (current != this._selectedRange) {
-      this.reset();
-    }
   }
 
   constructor() { }
@@ -48,11 +43,6 @@ export class MdPaginatorComponent implements OnInit {
       this.selectedPage += 1;
       this.pageChange.emit(this.currentPage);
     }
-  }
-
-  public reset() {
-    this.selectedPage = 1;
-    this.pageChange.emit(this.currentPage);
   }
 
   get pageCount(): number {
