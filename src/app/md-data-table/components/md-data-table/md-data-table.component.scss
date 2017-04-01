@@ -19,14 +19,20 @@ $footer-color: rgba(0, 0, 0, .54);
 $footer-height: 56px;
 
 table {
+  width: 100%;
   border-collapse: collapse;
 
   tr {
     position: relative;
-    text-overflow: ellipsis;
+    white-space: nowrap;
     line-height: 24px;
     letter-spacing: 0;
     font-size: 12px;
+
+    th {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
 
     th, td {
       box-sizing: border-box;
@@ -89,7 +95,6 @@ table {
   font-family: $font-family;
 
   .mat-data-table {
-    width: 100%;
     overflow: hidden;
 
     border-width: 1px;

@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { MaterialModule } from '@angular/material';
@@ -13,6 +14,7 @@ import { MdDataTableModule } from './md-data-table/md-data-table.module';
   ],
   imports: [
     BrowserModule,
+    FlexLayoutModule,
     FormsModule,
     HttpModule,
     MaterialModule,

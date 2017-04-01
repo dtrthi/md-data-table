@@ -63,7 +63,10 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterContentInit
 
   ngAfterViewInit(): void {
     if (this.scrollable) {
-      let h = this.elementRef.nativeElement.parentNode.offsetHeight;
+      let h = this.elementRef.nativeElement.offsetHeight;
+      if (!h) {
+        throw new Error('Must set width when using `fixedHeader`.');
+      }
       this.container.nativeElement.style.height = `${h - 56 * 2}px`;
 
       // handle column width for fixed header + footer
@@ -78,16 +81,17 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterContentInit
           firstRowTds.forEach(
             (value, index) => {
               headers[index].style.width = `${value.offsetWidth}px`;
+              headers[index].style.maxWidth = `${value.offsetWidth}px`;
               sum += value.offsetWidth;
             }
           );
         } else if (firstRowTds.length == 0) {
           sum = this.body.nativeElement.offsetWidth;
-          this.elementRef.nativeElement.querySelector('.mat-data-table-head').style.width = `${sum}px`;
         } else {
           throw new Error('Setup incorrect. See the document.');
         }
-        // then set total cell width to footer
+        // then set total cell width to header + footer
+        this.elementRef.nativeElement.querySelector('.mat-data-table-head').style.width = `${sum}px`;
         this.elementRef.nativeElement.querySelector('.mat-data-table-tail').style.width = `${sum}px`;
 
         // calculate page size

@@ -27,6 +27,11 @@ export class MdDataColumnComponent implements OnInit {
   }
 
   getFieldData(model) {
-    return model[this.field];
+    let fields = this.field.split('.');
+    let value = model;
+    fields.every((field) => {
+      return value = value[field];
+    });
+    return value;
   }
 }
