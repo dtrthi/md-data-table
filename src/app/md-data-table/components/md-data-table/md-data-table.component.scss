@@ -105,6 +105,10 @@ table {
     &.fixed-header {
       border-top-width: 0;
       border-bottom-width: 0;
+
+      thead {
+        display: none;
+      }
     }
 
     text-align: center;

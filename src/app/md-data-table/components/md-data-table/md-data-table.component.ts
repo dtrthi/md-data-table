@@ -1,5 +1,5 @@
 import {
-  AfterContentInit, AfterViewInit, Component, ContentChildren, ElementRef, EventEmitter,
+  AfterContentInit, AfterViewChecked, Component, ContentChildren, ElementRef, EventEmitter,
   Input, OnInit, OnChanges, Output, SimpleChanges, ViewChild
 } from '@angular/core';
 
@@ -13,13 +13,19 @@ import { MdRowData } from '../../models/md-row-data';
   templateUrl: './md-data-table.component.html',
   styleUrls: ['./md-data-table.component.scss']
 })
-export class MdDataTableComponent implements OnChanges, OnInit, AfterContentInit, AfterViewInit {
+export class MdDataTableComponent implements OnChanges, OnInit, AfterContentInit, AfterViewChecked {
   private _fixedHeader: boolean;
   private _data: any[]|any;
   private rows: MdRowData[] = [];
   private scrollable: boolean = false;
   private isLoading: boolean = false;
   private ajax: boolean = false;
+
+  private _pageSize: number;
+  private _autoPageSize: boolean = false;
+
+  private width;
+  private height;
 
   get fixedHeader(): boolean {
     return this._fixedHeader;
@@ -35,7 +41,19 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterContentInit
   @ViewChild(MdPaginatorComponent) paginatorComponent;
   @ContentChildren(MdDataColumnComponent) columns;
   @Input() total: number = 0;
-  @Input() pageSize: number|'auto' = 'auto';
+
+  get pageSize() {
+    return this._pageSize;
+  }
+
+  @Input() set pageSize(value) {
+    if (Number.isNaN(value)) {
+      this._pageSize = 0;
+      this._autoPageSize = true;
+    } else {
+      this._pageSize = value;
+    }
+  }
 
   get data(): any[]|any {
     return this._data;
@@ -61,18 +79,25 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterContentInit
     this._updateRows();
   }
 
-  ngAfterViewInit(): void {
+  ngAfterViewChecked(): void {
     if (this.scrollable) {
       let h = this.elementRef.nativeElement.offsetHeight;
       if (!h) {
         throw new Error('Must set width when using `fixedHeader`.');
       }
-      this.container.nativeElement.style.height = `${h - 56 * 2}px`;
+      if (this.height != h) {
+        console.log(h);
+        this.height = h;
+        this.container.nativeElement.style.height = `${h - 56 * 2 - 1}px`;
+
+        // calculate page size
+        this._autoPageSize && (this.pageSize = Math.ceil(this.container.nativeElement.offsetHeight / 48));
+      }
 
       // handle column width for fixed header + footer
-      // TODO why I have to cheat T_T
-      setTimeout(() => {
-        let firstRowTds = this.body.nativeElement.querySelectorAll('tr:first-child td');
+      let firstRow = this.body.nativeElement.querySelector('tr');
+      if (firstRow && this.width != firstRow.offsetWidth) {
+        let firstRowTds = firstRow.querySelectorAll('td');
         let headers = this.elementRef.nativeElement.querySelectorAll('.mat-data-table-head tr th');
 
         let sum = 0;
@@ -90,13 +115,11 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterContentInit
         } else {
           throw new Error('Setup incorrect. See the document.');
         }
+        this.width = sum;
         // then set total cell width to header + footer
         this.elementRef.nativeElement.querySelector('.mat-data-table-head').style.width = `${sum}px`;
         this.elementRef.nativeElement.querySelector('.mat-data-table-tail').style.width = `${sum}px`;
-
-        // calculate page size
-        this.pageSize == 'auto' && (this.pageSize = Math.ceil(this.container.nativeElement.offsetHeight / 48));
-      }, 500);
+      }
     }
   }
 
