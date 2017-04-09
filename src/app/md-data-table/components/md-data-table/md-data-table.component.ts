@@ -169,7 +169,6 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterContentInit
 
   _onPageChange() {
     this._updateRows();
-    this.onPageChange.emit(this.paginatorComponent.currentPage);
   }
 
   _onClick(row: MdRowData) {

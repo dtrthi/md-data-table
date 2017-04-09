@@ -10,17 +10,13 @@ import { MdPagination } from './md-data-table/models/md-pagination';
 })
 export class AppComponent implements OnInit {
   title = 'app works!';
-  private data: Array<any>|any;
+  private fetchData: any;
   private total: number = 0;
 
   constructor(private http: Http) { }
 
   ngOnInit() {
-    this.data = this.fetchData();
-  }
-
-  fetchData() {
-    return (paging: MdPagination) => {
+    this.fetchData = (paging: MdPagination) => {
       return this.http.get('assets/data.json').map(
         response => {
           let data = response.json();
