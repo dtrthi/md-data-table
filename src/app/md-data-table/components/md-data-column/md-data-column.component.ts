@@ -12,7 +12,7 @@ export class MdDataColumnComponent implements OnInit {
   @Input() title: string;
   @Input() field: string;
   @Input() tooltip: string;
-  @Input() numeric: boolean = false;
+  @Input() numeric = false;
 
   @ContentChild(TemplateRef) _customTemplate: TemplateRef<MdTableCellDirective>;
   @ViewChild('internalTemplate') _internalTemplate: TemplateRef<MdTableCellDirective>;
@@ -27,7 +27,7 @@ export class MdDataColumnComponent implements OnInit {
   }
 
   getFieldData(model) {
-    let fields = this.field.split('.');
+    const fields = this.field.split('.');
     let value = model;
     fields.every((field) => {
       return value = value[field];

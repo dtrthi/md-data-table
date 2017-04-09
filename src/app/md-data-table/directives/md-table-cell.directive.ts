@@ -16,13 +16,15 @@ export class MdTableCellDirective implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    let template = this.mdTableCellColumn.template;
+    const template = this.mdTableCellColumn.template;
     if (this.viewContainer && template) {
       this.childView = this.viewContainer.createEmbeddedView(template, this);
     }
   }
 
   ngOnDestroy(): void {
-    this.childView && this.childView.destroy();
+    if (this.childView) {
+      this.childView.destroy();
+    }
   }
 }

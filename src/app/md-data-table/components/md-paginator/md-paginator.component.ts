@@ -8,14 +8,16 @@ import { MdPagination } from '../../models/md-pagination';
 })
 export class MdPaginatorComponent implements OnInit {
 
-  private _selectedRange : number;
+  private _selectedRange: number;
 
-  @Input() selectedPage : number = 1;
-  @Input() total: number = 0;
-  @Input() ranges : number[] = [10, 25, 50, 100];
+  @Input() selectedPage = 1;
+  @Input() total = 0;
+  @Input() ranges: number[] = [10, 25, 50, 100];
   @Input() set selectedRange(selectedRange: number) {
     this._selectedRange = selectedRange;
   }
+
+  @Output() pageChange: EventEmitter<MdPagination> = new EventEmitter<MdPagination>();
 
   constructor() { }
 
@@ -28,8 +30,6 @@ export class MdPaginatorComponent implements OnInit {
   get selectedRange(): number {
     return this._selectedRange;
   }
-
-  @Output() pageChange: EventEmitter<MdPagination> = new EventEmitter<MdPagination>();
 
   onPrevClick() {
     if (this.selectedPage > 1) {
@@ -46,16 +46,16 @@ export class MdPaginatorComponent implements OnInit {
   }
 
   get pageCount(): number {
-    let pageCount = (this.total / this.selectedRange) + ((this.total % this.selectedRange) > 0 ? 1 : 0);
-    return pageCount ? parseInt('' + pageCount) : 0;
+    const pageCount = (this.total / this.selectedRange) + ((this.total % this.selectedRange) > 0 ? 1 : 0);
+    return pageCount ? parseInt('' + pageCount, 10) : 0;
   }
 
   get pageStart(): number {
-    return parseInt('' + Math.min(((this.selectedPage * this.selectedRange) - this.selectedRange + 1), this.total));
+    return parseInt('' + Math.min(((this.selectedPage * this.selectedRange) - this.selectedRange + 1), this.total), 10);
   }
 
   get pageEnd(): number {
-    return parseInt('' + Math.min((this.selectedPage * this.selectedRange), this.total));
+    return parseInt('' + Math.min((this.selectedPage * this.selectedRange), this.total), 10);
   }
 
   get currentPage() {

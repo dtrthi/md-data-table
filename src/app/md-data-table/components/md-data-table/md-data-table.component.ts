@@ -13,19 +13,19 @@ import { MdRowData } from '../../models/md-row-data';
   templateUrl: './md-data-table.component.html',
   styleUrls: ['./md-data-table.component.scss'],
   host: {
-    '[class.row-selectable]': 'onRowClick.observers.length'
+    '[class.row-selectable]': 'rowClick.observers.length'
   }
 })
 export class MdDataTableComponent implements OnChanges, OnInit, AfterContentInit, AfterViewChecked {
   private _fixedHeader: boolean;
   private _data: any[]|any;
-  private rows: MdRowData[] = [];
-  private scrollable: boolean = false;
-  private isLoading: boolean = false;
-  private ajax: boolean = false;
+  rows: MdRowData[] = [];
+  private scrollable = false;
+  private isLoading = false;
+  private ajax = false;
 
   private _pageSize: number;
-  private _autoPageSize: boolean = false;
+  private _autoPageSize = false;
 
   private width;
   private height;
@@ -43,7 +43,7 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterContentInit
   @ViewChild('body') body;
   @ViewChild(MdPaginatorComponent) paginatorComponent;
   @ContentChildren(MdDataColumnComponent) columns;
-  @Input() total: number = 0;
+  @Input() total = 0;
 
   get pageSize() {
     return this._pageSize;
@@ -64,13 +64,13 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterContentInit
 
   @Input() set data(value: any[]|any) {
     this._data = value;
-    if (typeof value == 'function') {
+    if (typeof value === 'function') {
       this.ajax = true;
     }
   }
 
-  @Output('pageChange') onPageChange: EventEmitter<MdPagination> = new EventEmitter<MdPagination>();
-  @Output('rowClick') onRowClick: EventEmitter<any> = new EventEmitter<any>();
+  @Output() pageChange: EventEmitter<MdPagination> = new EventEmitter<MdPagination>();
+  @Output() rowClick: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(
     private elementRef: ElementRef
@@ -85,27 +85,28 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterContentInit
 
   ngAfterViewChecked(): void {
     if (this.scrollable) {
-      let h = this.elementRef.nativeElement.offsetHeight;
+      const h = this.elementRef.nativeElement.offsetHeight;
       if (!h) {
         throw new Error('Must set width when using `fixedHeader`.');
       }
-      if (this.height != h) {
-        console.log(h);
+      if (this.height !== h) {
         this.height = h;
         this.container.nativeElement.style.height = `${h - 56 * 2 - 1}px`;
 
         // calculate page size
-        this._autoPageSize && (this.pageSize = Math.ceil(this.container.nativeElement.offsetHeight / 48));
+        if (this._autoPageSize) {
+          this.pageSize = Math.ceil(this.container.nativeElement.offsetHeight / 48);
+        }
       }
 
       // handle column width for fixed header + footer
-      let firstRow = this.body.nativeElement.querySelector('tr');
-      if (firstRow && this.width != firstRow.offsetWidth) {
-        let firstRowTds = firstRow.querySelectorAll('td');
-        let headers = this.elementRef.nativeElement.querySelectorAll('.mat-data-table-head tr th');
+      const firstRow = this.body.nativeElement.querySelector('tr');
+      if (firstRow && this.width !== firstRow.offsetWidth) {
+        const firstRowTds = firstRow.querySelectorAll('td');
+        const headers = this.elementRef.nativeElement.querySelectorAll('.mat-data-table-head tr th');
 
         let sum = 0;
-        if (headers.length == firstRowTds.length) {
+        if (headers.length === firstRowTds.length) {
           // for each row cell, set the corresponding header width
           firstRowTds.forEach(
             (value, index) => {
@@ -114,7 +115,7 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterContentInit
               sum += value.offsetWidth;
             }
           );
-        } else if (firstRowTds.length == 0) {
+        } else if (firstRowTds.length === 0) {
           sum = this.body.nativeElement.offsetWidth;
         } else {
           throw new Error('Setup incorrect. See the document.');
@@ -172,6 +173,6 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterContentInit
   }
 
   _onClick(row: MdRowData) {
-    this.onRowClick.emit(row.model);
+    this.rowClick.emit(row.model);
   }
 }
