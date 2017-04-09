@@ -51,7 +51,7 @@ export class MdPaginatorComponent implements OnInit {
   }
 
   get pageStart(): number {
-    return parseInt('' + ((this.selectedPage * this.selectedRange) - this.selectedRange + 1));
+    return parseInt('' + Math.min(((this.selectedPage * this.selectedRange) - this.selectedRange + 1), this.total));
   }
 
   get pageEnd(): number {
