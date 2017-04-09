@@ -55,8 +55,12 @@ $button-color-disabled: rgba(0, 0, 0, .26);
         color: $button-color-disabled;
       }
 
-      .mat-button-ripple {
+      /deep/ .mat-button-ripple {
         border-radius: 50%;
+      }
+
+      /deep/ .mat-button-focus-overlay {
+        background-color: initial;
       }
     }
   }

@@ -11,7 +11,10 @@ import { MdRowData } from '../../models/md-row-data';
 @Component({
   selector: 'md-data-table',
   templateUrl: './md-data-table.component.html',
-  styleUrls: ['./md-data-table.component.scss']
+  styleUrls: ['./md-data-table.component.scss'],
+  host: {
+    '[class.row-selectable]': 'onRowClick.observers.length'
+  }
 })
 export class MdDataTableComponent implements OnChanges, OnInit, AfterContentInit, AfterViewChecked {
   private _fixedHeader: boolean;
@@ -67,6 +70,7 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterContentInit
   }
 
   @Output('pageChange') onPageChange: EventEmitter<MdPagination> = new EventEmitter<MdPagination>();
+  @Output('rowClick') onRowClick: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(
     private elementRef: ElementRef
@@ -163,8 +167,12 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterContentInit
     }
   }
 
-  private _onPageChange() {
+  _onPageChange() {
     this._updateRows();
     this.onPageChange.emit(this.paginatorComponent.currentPage);
+  }
+
+  _onClick(row: MdRowData) {
+    this.onRowClick.emit(row.model);
   }
 }

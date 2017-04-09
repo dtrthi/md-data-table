@@ -20,7 +20,7 @@
     </thead>
     <tbody #body>
     <tr mdDataTableRow *ngFor="let row of rows"
-        [row]="row" [columns]="columns">
+        [row]="row" [columns]="columns" (click)="_onClick(row)">
     </tr>
     </tbody>
     <tfoot *ngIf="!fixedHeader">

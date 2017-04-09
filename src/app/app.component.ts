@@ -29,4 +29,8 @@ export class AppComponent implements OnInit {
       );
     };
   }
+
+  onRowClick(data) {
+    console.log(data);
+  }
 }
