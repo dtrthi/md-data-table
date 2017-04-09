@@ -80,7 +80,7 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterContentInit
   }
 
   ngAfterContentInit(): void {
-    this._updateRows();
+    this.updateRows();
   }
 
   ngAfterViewChecked(): void {
@@ -129,10 +129,12 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterContentInit
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this._updateRows();
+    if (changes.data) {
+      this.updateRows();
+    }
   }
 
-  private _updateRows() {
+  updateRows() {
     if (this.ajax) {
       this.isLoading = true;
       this._data(
@@ -169,7 +171,7 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterContentInit
   }
 
   _onPageChange() {
-    this._updateRows();
+    this.updateRows();
   }
 
   _onClick(row: MdRowData) {
