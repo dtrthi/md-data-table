@@ -66,6 +66,8 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterContentInit
     this._data = value;
     if (typeof value === 'function') {
       this.ajax = true;
+    } else if (Array.isArray(this._data) && this.total !== this._data.length) {
+      this.total = this._data.length;
     }
   }
 
