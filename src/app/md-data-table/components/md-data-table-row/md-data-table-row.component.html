@@ -1,5 +1,7 @@
 <td *ngFor="let column of columns"
-    [class.mat-numeric-column]="column.numeric">
+    [class.mat-numeric-column]="column.numeric"
+    [class.mat-editable]="column.editable"
+    (click)="onCellClick(column, thisCell)" #thisCell>
   <span class="mat-column-title">{{column.title}}</span>
   <span>
     <template mdTableCell [mdTableCellColumn]="column" [mdTableCellModel]="row.model"></template>

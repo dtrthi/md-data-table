@@ -7,6 +7,7 @@ import { MaterialModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { MdDataTableModule } from './md-data-table/md-data-table.module';
+import { DemoAppModule } from './demo-app/demo-app.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { MdDataTableModule } from './md-data-table/md-data-table.module';
     FormsModule,
     HttpModule,
     MaterialModule,
-    MdDataTableModule
+    MdDataTableModule,
+    DemoAppModule
   ],
   providers: [],
   bootstrap: [AppComponent]
