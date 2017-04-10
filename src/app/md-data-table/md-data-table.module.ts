@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { MaterialModule } from '@angular/material';
+import { MdButtonModule, MdDialogModule, MdIconModule, MdInputModule, MdTooltipModule } from '@angular/material';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { InlineDialogComponent } from './components/inline-dialog/inline-dialog.component';
 import { MdDataTableComponent } from './components/md-data-table/md-data-table.component';
@@ -13,8 +14,13 @@ import { MdTableCellDirective } from './directives/md-table-cell.directive';
 @NgModule({
   imports: [
     CommonModule,
+    NoopAnimationsModule,
     FlexLayoutModule,
-    MaterialModule
+    MdButtonModule,
+    MdDialogModule,
+    MdIconModule,
+    MdInputModule,
+    MdTooltipModule
   ],
   declarations: [
     InlineDialogComponent,
