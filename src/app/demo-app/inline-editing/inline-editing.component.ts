@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Http } from '@angular/http';
+import { Subject } from 'rxjs/Subject';
 
 import { MdPagination } from '../../md-data-table/models/md-pagination';
 
@@ -16,12 +17,17 @@ export class InlineEditingComponent implements OnInit {
 
   ngOnInit() {
     this.fetchData = (paging: MdPagination) => {
-      return this.http.get('assets/data.json').map(
-        response => {
-          const data = response.json();
-          return Array.isArray(data) && (this.total = data.length) && data.slice(paging.begin, paging.end + 1) || [];
-        }
-      );
+      let subject = new Subject();
+      setTimeout(
+        () => {
+          this.http.get('assets/data.json').subscribe(
+            response => {
+              const data = response.json();
+              subject.next(Array.isArray(data) && (this.total = data.length) && data.slice(paging.begin, paging.end + 1) || []);
+            }
+          );
+        }, 500);
+      return subject.asObservable();
     };
   }
 }

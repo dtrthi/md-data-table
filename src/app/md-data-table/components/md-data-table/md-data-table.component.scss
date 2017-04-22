@@ -18,6 +18,10 @@ $footer-font-size: 12px;
 $footer-color: rgba(0, 0, 0, .54);
 $footer-height: 56px;
 
+md-progress-bar {
+  height: 1px;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -130,6 +134,11 @@ table {
 
         .selected {
           background-color: $row-selected-color;
+        }
+
+        td {
+          text-align: left;
+          padding: 0 24px;
         }
       }
     }
