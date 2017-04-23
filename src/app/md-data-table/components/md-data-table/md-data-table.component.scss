@@ -18,6 +18,13 @@ $footer-font-size: 12px;
 $footer-color: rgba(0, 0, 0, .54);
 $footer-height: 56px;
 
+:host {
+  border-width: 1px;
+  border-style: solid;
+  border-color: $border-color;
+  border-radius: inherit;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -96,10 +103,6 @@ table {
 
   .mat-data-table {
     overflow: hidden;
-
-    border-width: 1px;
-    border-style: solid;
-    border-color: $border-color;
     white-space: nowrap;
 
     &.fixed-header {
@@ -116,6 +119,7 @@ table {
     tbody {
       tr {
         border-top: 1px solid $border-color;
+        border-bottom: 1px solid $border-color;
         font-size: $content-font-size;
         color: $content-color;
         height: $content-height;
@@ -134,6 +138,11 @@ table {
       }
     }
   }
+}
+
+table.mat-data-table-tail {
+  // resolve conflict with last body row border
+  margin-top: -1px;
 }
 
 :host.row-selectable {
