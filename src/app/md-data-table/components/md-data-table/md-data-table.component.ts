@@ -1,5 +1,5 @@
 import {
-  AfterContentInit, AfterViewChecked, Component, ContentChildren, ElementRef, EventEmitter,
+  AfterContentInit, AfterViewChecked, Component, ContentChild, ContentChildren, ElementRef, EventEmitter,
   Input, OnInit, OnChanges, Output, SimpleChanges, ViewChild
 } from '@angular/core';
 
@@ -7,6 +7,7 @@ import { MdDataColumnComponent } from '../md-data-column/md-data-column.componen
 import { MdPaginatorComponent } from '../md-paginator/md-paginator.component';
 import { MdPagination } from '../../models/md-pagination';
 import { MdRowData } from '../../models/md-row-data';
+import { MdTableHeaderComponent } from '../md-table-header/md-table-header.component';
 
 @Component({
   selector: 'md-data-table',
@@ -21,7 +22,7 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterContentInit
   private _data: any[]|any;
   rows: MdRowData[] = [];
   private scrollable = false;
-  private isLoading = false;
+  private isLoading = true;
   private ajax = false;
 
   private _pageSize: number;
@@ -42,6 +43,7 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterContentInit
   @ViewChild('container') container;
   @ViewChild('body') body;
   @ViewChild(MdPaginatorComponent) paginatorComponent;
+  @ContentChild(MdTableHeaderComponent) header;
   @ContentChildren(MdDataColumnComponent) columns;
   @Input() total = 0;
 
@@ -93,7 +95,11 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterContentInit
       }
       if (this.height !== h) {
         this.height = h;
-        this.container.nativeElement.style.height = `${h - 56 * 2 - 1}px`;
+        let dh = 1 /* host border */ + 56 * 2 + 1 + 1 /* one for progress bar */;
+        if (this.header) {
+          dh += 64 /* table header css height */;
+        }
+        this.container.nativeElement.style.height = `${h - dh}px`;
 
         // calculate page size
         if (this._autoPageSize) {
@@ -102,7 +108,7 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterContentInit
       }
 
       // handle column width for fixed header + footer
-      const firstRow = this.body.nativeElement.querySelector('tr');
+      const firstRow = this.body.nativeElement.querySelector('tr[mdDataTableRow]');
       if (firstRow && this.width !== firstRow.offsetWidth) {
         const firstRowTds = firstRow.querySelectorAll('td');
         const headers = this.elementRef.nativeElement.querySelectorAll('.mat-data-table-head tr th');
@@ -169,6 +175,7 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterContentInit
           this.rows[index] = new MdRowData(model);
         }
       );
+      this.isLoading = false;
     }
   }
 

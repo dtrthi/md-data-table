@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InlineEditingComponent } from './inline-editing.component';
+import { MdTableHeaderComponent } from './md-table-header.component';
 
-describe('InlineEditingComponent', () => {
-  let component: InlineEditingComponent;
-  let fixture: ComponentFixture<InlineEditingComponent>;
+describe('MdTableHeaderComponent', () => {
+  let component: MdTableHeaderComponent;
+  let fixture: ComponentFixture<MdTableHeaderComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ InlineEditingComponent ]
+      declarations: [ MdTableHeaderComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(InlineEditingComponent);
+    fixture = TestBed.createComponent(MdTableHeaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
