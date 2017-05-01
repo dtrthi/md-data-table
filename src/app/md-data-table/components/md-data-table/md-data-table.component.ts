@@ -21,7 +21,7 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterContentInit
   private _data: any[]|any;
   rows: MdRowData[] = [];
   private scrollable = false;
-  private isLoading = false;
+  private isLoading = true;
   private ajax = false;
 
   private _pageSize: number;
@@ -93,7 +93,7 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterContentInit
       }
       if (this.height !== h) {
         this.height = h;
-        this.container.nativeElement.style.height = `${h - 56 * 2 - 1}px`;
+        this.container.nativeElement.style.height = `${h - 56 * 2 - 1 - 1 /* one for progress bar */}px`;
 
         // calculate page size
         if (this._autoPageSize) {
@@ -102,7 +102,7 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterContentInit
       }
 
       // handle column width for fixed header + footer
-      const firstRow = this.body.nativeElement.querySelector('tr');
+      const firstRow = this.body.nativeElement.querySelector('tr[mdDataTableRow]');
       if (firstRow && this.width !== firstRow.offsetWidth) {
         const firstRowTds = firstRow.querySelectorAll('td');
         const headers = this.elementRef.nativeElement.querySelectorAll('.mat-data-table-head tr th');
@@ -169,6 +169,7 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterContentInit
           this.rows[index] = new MdRowData(model);
         }
       );
+      this.isLoading = false;
     }
   }
 
