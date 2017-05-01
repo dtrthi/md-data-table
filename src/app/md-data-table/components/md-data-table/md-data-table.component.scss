@@ -18,6 +18,13 @@ $footer-font-size: 12px;
 $footer-color: rgba(0, 0, 0, .54);
 $footer-height: 56px;
 
+:host {
+  border-width: 1px;
+  border-style: solid;
+  border-color: $border-color;
+  border-radius: inherit;
+}
+
 md-progress-bar {
   height: 1px;
 }
@@ -100,10 +107,6 @@ table {
 
   .mat-data-table {
     overflow: hidden;
-
-    border-width: 1px;
-    border-style: solid;
-    border-color: $border-color;
     white-space: nowrap;
 
     &.fixed-header {
@@ -120,6 +123,7 @@ table {
     tbody {
       tr {
         border-top: 1px solid $border-color;
+        border-bottom: 1px solid $border-color;
         font-size: $content-font-size;
         color: $content-color;
         height: $content-height;
@@ -135,14 +139,14 @@ table {
         .selected {
           background-color: $row-selected-color;
         }
-
-        td {
-          text-align: left;
-          padding: 0 24px;
-        }
       }
     }
   }
+}
+
+table.mat-data-table-tail {
+  // resolve conflict with last body row border
+  margin-top: -1px;
 }
 
 :host.row-selectable {

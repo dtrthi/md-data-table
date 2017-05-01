@@ -12,6 +12,7 @@ import { MdDataColumnComponent } from './components/md-data-column/md-data-colum
 import { MdDataTableRowComponent } from './components/md-data-table-row/md-data-table-row.component';
 import { MdPaginatorComponent } from './components/md-paginator/md-paginator.component';
 import { MdTableCellDirective } from './directives/md-table-cell.directive';
+import { MdTableHeaderComponent } from './components/md-table-header/md-table-header.component';
 
 @NgModule({
   imports: [
@@ -30,11 +31,13 @@ import { MdTableCellDirective } from './directives/md-table-cell.directive';
     MdDataColumnComponent,
     MdDataTableRowComponent,
     MdPaginatorComponent,
-    MdTableCellDirective
+    MdTableCellDirective,
+    MdTableHeaderComponent
   ],
   exports: [
     MdDataColumnComponent,
-    MdDataTableComponent
+    MdDataTableComponent,
+    MdTableHeaderComponent
   ]
 })
 export class MdDataTableModule { }
