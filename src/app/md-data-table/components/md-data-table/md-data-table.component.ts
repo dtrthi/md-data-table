@@ -1,5 +1,5 @@
 import {
-  AfterContentInit, AfterViewChecked, Component, ContentChild, ContentChildren, ElementRef, EventEmitter,
+  AfterViewChecked, Component, ContentChild, ContentChildren, ElementRef, EventEmitter,
   Input, OnInit, OnChanges, Output, SimpleChanges, ViewChild
 } from '@angular/core';
 
@@ -17,7 +17,7 @@ import { MdTableHeaderComponent } from '../md-table-header/md-table-header.compo
     '[class.row-selectable]': 'rowClick.observers.length'
   }
 })
-export class MdDataTableComponent implements OnChanges, OnInit, AfterContentInit, AfterViewChecked {
+export class MdDataTableComponent implements OnChanges, OnInit, AfterViewChecked {
   private _fixedHeader: boolean;
   private _data: any[]|any;
   rows: MdRowData[] = [];
@@ -81,10 +81,6 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterContentInit
   ) { }
 
   ngOnInit() {
-  }
-
-  ngAfterContentInit(): void {
-    this.updateRows();
   }
 
   ngAfterViewChecked(): void {

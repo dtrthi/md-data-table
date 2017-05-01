@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormArray, FormBuilder } from '@angular/forms';
 import { Http } from '@angular/http';
 import { Subject } from 'rxjs/Subject';
 
@@ -12,10 +13,16 @@ import { MdPagination } from '../../md-data-table/models/md-pagination';
 export class InlineEditingComponent implements OnInit {
   private fetchData: any;
   private total = 0;
+  private formArray: FormArray;
 
-  constructor(private http: Http) { }
+  constructor(
+    private fb: FormBuilder,
+    private http: Http
+  ) { }
 
   ngOnInit() {
+    this.buildForm();
+
     this.fetchData = (paging: MdPagination) => {
       let subject = new Subject();
       setTimeout(
@@ -29,5 +36,23 @@ export class InlineEditingComponent implements OnInit {
         }, 500);
       return subject.asObservable();
     };
+  }
+
+  onFieldChange(event) {
+    this.formArray.insert(
+      event.data.id,
+      this.fb.group({
+        id: event.data.id,
+        value: event.data
+      })
+    );
+  }
+
+  logFormArray() {
+    console.log(this.formArray.value);
+  }
+
+  private buildForm() {
+    this.formArray = this.fb.array([]);
   }
 }

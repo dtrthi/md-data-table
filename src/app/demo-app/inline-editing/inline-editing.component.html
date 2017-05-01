@@ -1,16 +1,17 @@
 <md-card class="data-table-card" fxFlex fxLayout="column" [style.height.px]="570">
-<md-card class="data-table-card" fxFlex fxLayout="column" [style.height.px]="570">
   <md-data-table [data]="fetchData" [total]="total" pageSize="11" fixedHeader="true" fxFlex>
     <md-table-header title="Inline Editing"></md-table-header>
     <md-data-column title="Dessert (100g serving)"
                     field="name"
                     tooltip="Dessert (100g serving)"
-                    editable="inline"></md-data-column>
+                    editable="inline"
+                    (onFieldChange)="onFieldChange($event)"></md-data-column>
     <md-data-column title="Calories"
                     field="calories"
                     numeric="true"
                     tooltip="Calories"
-                    editable="inline"></md-data-column>
+                    editable="inline"
+                    (onFieldChange)="onFieldChange($event)"></md-data-column>
     <md-data-column title="Fat (g)"
                     field="fat"
                     numeric="true"
