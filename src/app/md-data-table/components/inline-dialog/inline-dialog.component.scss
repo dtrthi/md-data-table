@@ -1,0 +1,19 @@
+$input-font-size: 14px;
+
+:host {
+  display: flex;
+}
+
+md-input-container {
+  flex: 1;
+  margin-top: -15px;
+  margin-bottom: -18px;
+
+  md-hint {
+    font-size: 80%;
+  }
+}
+
+[mdInput] {
+  font-size: $input-font-size;
+}

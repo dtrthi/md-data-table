@@ -2,7 +2,7 @@
   {{title}}
 </h1>
 
-<md-card class="data-table-card" fxFlex fxLayout="column" style="height: 570px;">
+<md-card class="data-table-card" fxLayout="column" [style.height.px]="570">
   <md-card-title>Ajax Paging</md-card-title>
   <md-data-table [data]="fetchData" [total]="total" pageSize="11" fixedHeader="true" (rowClick)="onRowClick($event)" fxFlex>
     <md-data-column title="Dessert (100g serving)"
@@ -38,3 +38,6 @@
                           tooltip="Iron (%)"></md-data-column>
   </md-data-table>
 </md-card>
+<hr>
+
+<app-inline-editing></app-inline-editing>
