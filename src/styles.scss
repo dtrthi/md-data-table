@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-@import '~@angular/material/theming';
+@import '~@angular/material/core/theming/all-theme';
 
 // Include non-theme styles for core.
 @include mat-core();
@@ -17,4 +17,7 @@ html, body {
 
 body {
   margin: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
