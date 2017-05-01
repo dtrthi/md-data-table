@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormArray, FormBuilder } from '@angular/forms';
 import { Http } from '@angular/http';
 
 import { MdPagination } from '../../md-data-table/models/md-pagination';
@@ -11,10 +12,16 @@ import { MdPagination } from '../../md-data-table/models/md-pagination';
 export class InlineEditingComponent implements OnInit {
   private fetchData: any;
   private total = 0;
+  private formArray: FormArray;
 
-  constructor(private http: Http) { }
+  constructor(
+    private fb: FormBuilder,
+    private http: Http
+  ) { }
 
   ngOnInit() {
+    this.buildForm();
+
     this.fetchData = (paging: MdPagination) => {
       return this.http.get('assets/data.json').map(
         response => {
@@ -23,5 +30,23 @@ export class InlineEditingComponent implements OnInit {
         }
       );
     };
+  }
+
+  onFieldChange(event) {
+    this.formArray.insert(
+      event.data.id,
+      this.fb.group({
+        id: event.data.id,
+        value: event.data
+      })
+    );
+  }
+
+  logFormArray() {
+    console.log(this.formArray.value);
+  }
+
+  private buildForm() {
+    this.formArray = this.fb.array([]);
   }
 }

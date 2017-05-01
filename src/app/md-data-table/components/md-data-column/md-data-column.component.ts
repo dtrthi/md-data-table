@@ -1,5 +1,6 @@
 import { Component, ContentChild, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { MdTableCellDirective } from '../../directives/md-table-cell.directive';
+import { isObject } from 'util';
 
 @Component({
   selector: 'md-data-column',
@@ -47,9 +48,16 @@ export class MdDataColumnComponent implements OnInit {
   setFieldData(model, value) {
     const fields = this.field.split('.');
     let v = model;
-    fields.every((field) => {
+    let f = null;
+    fields.every((field, index) => {
+      f = field;
+      if (fields.length === index + 1) {
+        return false;
+      }
       return v = v[field];
     });
-    v = value;
+    if (isObject(v) && v.hasOwnProperty(f)) {
+      v[f] = value;
+    }
   }
 }

@@ -4,16 +4,21 @@ $input-font-size: 14px;
   display: flex;
 }
 
-md-input-container {
+form {
   flex: 1;
-  margin-top: -15px;
-  margin-bottom: -18px;
+  display: flex;
 
-  md-hint {
-    font-size: 80%;
+  md-input-container {
+    flex: 1;
+    margin-top: -15px;
+    margin-bottom: -18px;
+
+    md-hint {
+      font-size: 80%;
+    }
   }
-}
 
-[mdInput] {
-  font-size: $input-font-size;
+  [mdInput] {
+    font-size: $input-font-size;
+  }
 }

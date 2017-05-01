@@ -47,7 +47,7 @@ export class MdDataTableRowComponent implements OnInit {
           if (oldValue != result) {
             column.setFieldData(this.row.model, result);
             column.onFieldChange.emit({
-              model: this.row.model,
+              data: this.row.model,
               field: column.field,
               oldValue: oldValue,
               newValue: result
