@@ -24,7 +24,7 @@
     <tr mdDataTableRow *ngFor="let row of rows"
         [row]="row" [columns]="columns" (click)="_onClick(row)">
     </tr>
-    <tr *ngIf="!rows || !rows.length"><td colspan="columns.length">No data</td></tr>
+    <tr *ngIf="!rows || !rows.length"><td [attr.colspan]="columns.length">No data</td></tr>
     </tbody>
     <tfoot *ngIf="!fixedHeader">
     <tr>
