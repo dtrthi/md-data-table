@@ -19,6 +19,7 @@ $footer-color: rgba(0, 0, 0, .54);
 $footer-height: 56px;
 
 :host {
+  display: block;
   border-width: 1px;
   border-style: solid;
   border-color: $border-color;
