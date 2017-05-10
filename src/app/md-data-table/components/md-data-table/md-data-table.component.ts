@@ -20,7 +20,7 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterViewChecked
   private _data: any[]|any;
   rows: MdRowData[] = [];
   private scrollable = false;
-  private isLoading = true;
+  isLoading = true;
   private ajax = false;
 
   private _pageSize: number;

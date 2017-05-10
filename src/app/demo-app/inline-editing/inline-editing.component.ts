@@ -11,8 +11,8 @@ import { MdPagination } from '../../md-data-table/models/md-pagination';
   styleUrls: ['./inline-editing.component.scss']
 })
 export class InlineEditingComponent implements OnInit {
-  private fetchData: any;
-  private total = 0;
+  fetchData: any;
+  total = 0;
   private formArray: FormArray;
   private subject: Subject<any>;
 

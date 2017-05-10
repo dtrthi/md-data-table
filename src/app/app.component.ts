@@ -10,8 +10,8 @@ import { MdPagination } from './md-data-table/models/md-pagination';
 })
 export class AppComponent implements OnInit {
   title = 'app works!';
-  private data: any;
-  private total = 0;
+  data: any;
+  total = 0;
 
   constructor(private http: Http) { }
 
