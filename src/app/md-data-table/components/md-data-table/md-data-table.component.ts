@@ -2,6 +2,7 @@ import {
   AfterViewChecked, Component, ContentChild, ContentChildren, ElementRef, EventEmitter,
   Input, OnInit, OnChanges, Output, SimpleChanges, ViewChild
 } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 
 import { MdDataColumnComponent } from '../md-data-column/md-data-column.component';
 import { MdPaginatorComponent } from '../md-paginator/md-paginator.component';
@@ -66,7 +67,7 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterViewChecked
 
   @Input() set data(value: any[]|any) {
     this._data = value;
-    if (typeof value === 'function') {
+    if (value instanceof Observable) {
       this.ajax = true;
     } else if (Array.isArray(this._data) && this.total !== this._data.length) {
       this.total = this._data.length;
@@ -141,26 +142,22 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterViewChecked
   updateRows() {
     if (this.ajax) {
       this.isLoading = true;
-      this._data(
-        this.paginatorComponent
-          ? this.paginatorComponent.currentPage
-          : { begin: 0, end: this.pageSize }
-        ).subscribe(
-          data => {
-            if (Array.isArray(data) && data.length) {
-              this.rows.length = 0;
-              data.forEach(
-                (model: any, index: number) => {
-                  if (index >= this.pageSize) {
-                    return true;
-                  }
-                  this.rows[index] = new MdRowData(model);
+      this._data.subscribe(
+        data => {
+          if (Array.isArray(data) && data.length) {
+            this.rows.length = 0;
+            data.forEach(
+              (model: any, index: number) => {
+                if (index >= this.pageSize) {
+                  return true;
                 }
-              );
-            }
-            this.isLoading = false;
+                this.rows[index] = new MdRowData(model);
+              }
+            );
           }
-        );
+          this.isLoading = false;
+        }
+      );
     } else if (Array.isArray(this._data)) {
       this.rows.length = 0;
       this._data.some(
@@ -175,8 +172,9 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterViewChecked
     }
   }
 
-  _onPageChange() {
-    this.updateRows();
+  _onPageChange(event) {
+    this.isLoading = true;
+    this.pageChange.emit(event);
   }
 
   _onClick(row: MdRowData) {

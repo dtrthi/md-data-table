@@ -14,6 +14,7 @@ export class InlineEditingComponent implements OnInit {
   private fetchData: any;
   private total = 0;
   private formArray: FormArray;
+  private subject: Subject<any>;
 
   constructor(
     private fb: FormBuilder,
@@ -23,19 +24,14 @@ export class InlineEditingComponent implements OnInit {
   ngOnInit() {
     this.buildForm();
 
-    this.fetchData = (paging: MdPagination) => {
-      let subject = new Subject();
-      setTimeout(
-        () => {
-          this.http.get('assets/data.json').subscribe(
-            response => {
-              const data = response.json();
-              subject.next(Array.isArray(data) && (this.total = data.length) && data.slice(paging.begin, paging.end + 1) || []);
-            }
-          );
-        }, 500);
-      return subject.asObservable();
-    };
+    this.subject = new Subject();
+    this.http.get('assets/data.json').subscribe(
+      response => {
+        const data = response.json();
+        this.subject.next(Array.isArray(data) && (this.total = data.length) && data.slice(0, 11) || []);
+      }
+    );
+    this.fetchData = this.subject.asObservable();
   }
 
   onFieldChange(event) {
@@ -45,6 +41,16 @@ export class InlineEditingComponent implements OnInit {
         id: event.data.id,
         value: event.data
       })
+    );
+  }
+
+  onPageChange(event: MdPagination) {
+    console.log(event);
+    this.http.get('assets/data.json').subscribe(
+      response => {
+        const data = response.json();
+        this.subject.next(Array.isArray(data) && (this.total = data.length) && data.slice(event.begin, event.end + 1) || []);
+      }
     );
   }
 
