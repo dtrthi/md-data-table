@@ -21,7 +21,7 @@ export class InlineDialogComponent implements OnInit {
   ngOnInit() {
     this.form = this.fb.group({
       value: [this.value]
-    })
+    });
   }
 
   onFormSubmit() {

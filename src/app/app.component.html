@@ -4,7 +4,7 @@
 
 <md-card class="data-table-card" fxLayout="column" [style.height.px]="570">
   <md-card-title>Ajax Paging</md-card-title>
-  <md-data-table [data]="fetchData" [total]="total" pageSize="11" fixedHeader="true" (rowClick)="onRowClick($event)" fxFlex>
+  <md-data-table [data]="data" [total]="total" pageSize="11" fixedHeader="true" (rowClick)="onRowClick($event)" fxFlex>
     <md-data-column title="Dessert (100g serving)"
                           field="name"
                           tooltip="Dessert (100g serving)"></md-data-column>

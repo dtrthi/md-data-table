@@ -25,8 +25,7 @@ export class MdDataTableRowComponent implements OnInit {
   onCellClick(column, cellEl) {
     if (column.editable !== false) {
       const boundingRect = cellEl.getBoundingClientRect();
-      let dialogRef: MdDialogRef<InlineDialogComponent>;
-      let dialogConfig = new MdDialogConfig();
+      const dialogConfig = new MdDialogConfig();
       dialogConfig.viewContainerRef = this.viewContainerRef;
       dialogConfig.width = `${cellEl.offsetWidth}px`;
       dialogConfig.position = {
@@ -35,16 +34,16 @@ export class MdDataTableRowComponent implements OnInit {
       };
       dialogConfig.data = cellEl;
 
-      dialogRef = this.dialog.open(InlineDialogComponent, dialogConfig);
-
+      const dialogRef = this.dialog.open(InlineDialogComponent, dialogConfig);
       dialogRef.componentInstance.placeholder = column.placeholder;
       dialogRef.componentInstance.value = column.getFieldData(this.row.model);
       dialogRef.componentInstance.isNumeric = column.numeric;
 
       dialogRef.afterClosed().subscribe((result) => {
         if (typeof result !== 'undefined') {
-          let oldValue = column.getFieldData(this.row.model);
-          if (oldValue != result) {
+          const oldValue = column.getFieldData(this.row.model);
+          // TODO(dtrthi): consider add validation feature when using inline edit
+          if ('' + oldValue !== result) {
             column.setFieldData(this.row.model, result);
             column.onFieldChange.emit({
               data: this.row.model,

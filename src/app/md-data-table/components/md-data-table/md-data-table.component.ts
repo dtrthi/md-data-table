@@ -1,6 +1,6 @@
 import {
   AfterViewChecked, Component, ContentChild, ContentChildren, ElementRef, EventEmitter,
-  Input, OnInit, OnChanges, Output, SimpleChanges, ViewChild
+  Input, OnInit, OnChanges, Output, SimpleChanges, ViewChild, HostBinding
 } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
@@ -14,9 +14,6 @@ import { MdTableHeaderComponent } from '../md-table-header/md-table-header.compo
   selector: 'md-data-table',
   templateUrl: './md-data-table.component.html',
   styleUrls: ['./md-data-table.component.scss'],
-  host: {
-    '[class.row-selectable]': 'rowClick.observers.length'
-  }
 })
 export class MdDataTableComponent implements OnChanges, OnInit, AfterViewChecked {
   private _fixedHeader: boolean;
@@ -69,19 +66,25 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterViewChecked
     this._data = value;
     if (value instanceof Observable) {
       this.ajax = true;
-    } else if (Array.isArray(this._data) && this.total !== this._data.length) {
-      this.total = this._data.length;
+    } else if (Array.isArray(this._data)) {
+      this.pageChange.subscribe(() => this.updateRows());
+      if (this.total !== this._data.length) {
+        this.total = this._data.length;
+      }
     }
   }
 
   @Output() pageChange: EventEmitter<MdPagination> = new EventEmitter<MdPagination>();
   @Output() rowClick: EventEmitter<any> = new EventEmitter<any>();
 
+  @HostBinding('class.row-selectable') isRowSelectable = false;
+
   constructor(
     private elementRef: ElementRef
   ) { }
 
   ngOnInit() {
+    this.isRowSelectable = this.pageChange.observers.length > 0;
   }
 
   ngAfterViewChecked(): void {

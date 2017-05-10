@@ -10,20 +10,18 @@ import { MdPagination } from './md-data-table/models/md-pagination';
 })
 export class AppComponent implements OnInit {
   title = 'app works!';
-  private fetchData: any;
+  private data: any;
   private total = 0;
 
   constructor(private http: Http) { }
 
   ngOnInit() {
-    this.fetchData = (paging: MdPagination) => {
-      return this.http.get('assets/data.json').map(
-        response => {
-          const data = response.json();
-          return Array.isArray(data) && (this.total = data.length) && data.slice(paging.begin, paging.end + 1) || [];
-        }
-      );
-    };
+    return this.http.get('assets/data.json').subscribe(
+      response => {
+        this.data = response.json();
+        this.total = this.data.length;
+      }
+    );
   }
 
   onRowClick(data) {
