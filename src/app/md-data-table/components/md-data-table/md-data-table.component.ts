@@ -74,6 +74,12 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterViewChecked
     }
   }
 
+  @Input() set filterable(value) {
+    if (value !== false) {
+      this.header.filterable = true;
+    }
+  }
+
   @Output() pageChange: EventEmitter<MdPagination> = new EventEmitter<MdPagination>();
   @Output() rowClick: EventEmitter<any> = new EventEmitter<any>();
 

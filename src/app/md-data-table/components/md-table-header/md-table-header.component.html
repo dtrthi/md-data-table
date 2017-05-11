@@ -1,4 +1,5 @@
 <div>
   <span *ngIf="title">{{title}}</span>
   <ng-content *ngIf="!title"></ng-content>
+  <button md-icon-button class="card-action-icon" *ngIf="filterable"><md-icon>filter_list</md-icon></button>
 </div>

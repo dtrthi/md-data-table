@@ -3,10 +3,10 @@
     {{pageStart}}-{{pageEnd}} of {{total}}
   </div>
   <div class="mat-paginator-navigation">
-    <button md-button class="mat-button mat-icon-button" (click)="onPrevClick()" [disabled]="pageStart <= 1">
+    <button md-icon-button (click)="onPrevClick()" [disabled]="pageStart <= 1">
       <md-icon>chevron_left</md-icon>
     </button>
-    <button md-button (click)="onNextClick()" [disabled]="pageEnd >= total">
+    <button md-icon-button (click)="onNextClick()" [disabled]="pageEnd >= total">
       <md-icon>chevron_right</md-icon>
     </button>
   </div>

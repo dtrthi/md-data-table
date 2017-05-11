@@ -6,6 +6,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./md-table-header.component.scss']
 })
 export class MdTableHeaderComponent implements OnInit {
+  filterable = false;
   @Input() title = '';
 
   constructor() { }
