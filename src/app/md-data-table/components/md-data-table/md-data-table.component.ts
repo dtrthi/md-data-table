@@ -84,7 +84,7 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterViewChecked
   ) { }
 
   ngOnInit() {
-    this.isRowSelectable = this.pageChange.observers.length > 0;
+    this.isRowSelectable = this.rowClick.observers.length > 0;
   }
 
   ngAfterViewChecked(): void {
