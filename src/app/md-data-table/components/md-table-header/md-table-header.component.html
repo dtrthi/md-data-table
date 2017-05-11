@@ -1,8 +1,7 @@
 <div #wrapper>
   <span *ngIf="heading">{{heading}}</span>
   <ng-content *ngIf="!heading"></ng-content>
-  <button md-icon-button class="card-action-icon"
-          i18n-mdTooltip mdTooltip="Filter" *ngIf="filterable"><md-icon>filter_list</md-icon></button>
+  <md-filter-button class="card-action-icon" *ngIf="filterable"></md-filter-button>
   <button md-icon-button class="card-action-icon"
           i18n-mdTooltip mdTooltip="More Options" *ngIf="false"><md-icon>more_vert</md-icon></button>
 </div>
