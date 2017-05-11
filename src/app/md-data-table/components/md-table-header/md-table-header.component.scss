@@ -33,10 +33,11 @@ div {
     width: $button-width;
     height: $button-width;
     line-height: $button-width;
-    min-width: initial;
-    padding: 0;
-    border-radius: 50%;
 
     color: $button-color;
+
+    + .card-action-icon {
+      margin-left: $button-width;
+    }
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'md-table-header',
@@ -7,7 +7,21 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class MdTableHeaderComponent implements OnInit {
   filterable = false;
-  @Input() title = '';
+
+  set rightGap(value) {
+    if (this.wrapper) {
+      this.wrapper.nativeElement.style.paddingRight += `${value + 14}px`;
+    }
+  }
+
+  /** @deprecated Use heading instead */
+  @Input() set title(value) {
+    this.heading = value;
+  };
+
+  @Input() heading = '';
+
+  @ViewChild('wrapper') wrapper;
 
   constructor() { }
 
