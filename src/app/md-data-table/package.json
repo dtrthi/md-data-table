@@ -1,6 +1,6 @@
 {
   "name": "@dtrthi/md-data-table",
-  "version": "0.2.0-alpha.2",
+  "version": "0.2.0-alpha.3",
   "description": "A handmade material table for use before the official one published.",
   "main": "index.ts",
   "scripts": {
