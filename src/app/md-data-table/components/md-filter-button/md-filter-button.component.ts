@@ -36,7 +36,7 @@ export class MdFilterButtonComponent implements OnInit {
   filterState = 'none';
   isAnimating = false;
   filterForm: FormGroup;
-  delay = 1000;
+  delay = 300;
 
   constructor(
     private fb: FormBuilder,

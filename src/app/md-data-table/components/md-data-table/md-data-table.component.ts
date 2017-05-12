@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { FilterService } from '../../services/filter.service';
 import { MdDataColumnComponent } from '../md-data-column/md-data-column.component';
+import { MdPaginatorComponent } from '../md-paginator/md-paginator.component';
 import { MdPagination } from '../../models/md-pagination';
 import { MdRowData } from '../../models/md-row-data';
 import { MdTableHeaderComponent } from '../md-table-header/md-table-header.component';
@@ -35,6 +36,7 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterViewChecked
   private width;
   private height;
   private filterSubscription: Subscription;
+  private filterValue: string;
 
   get fixedHeader(): boolean {
     return this._fixedHeader;
@@ -47,6 +49,7 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterViewChecked
 
   @ViewChild('container') container;
   @ViewChild('body') body;
+  @ViewChild(MdPaginatorComponent) paginatorComponent;
   @ContentChild(MdTableHeaderComponent) header;
   @ContentChildren(MdDataColumnComponent) columns;
   @Input() total = 0;
@@ -56,7 +59,7 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterViewChecked
   }
 
   @Input() set pageSize(value) {
-    if (Number.isNaN(value)) {
+    if (isNaN(value)) {
       this._pageSize = 0;
       this._autoPageSize = true;
     } else {
@@ -101,6 +104,10 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterViewChecked
     this.isRowSelectable = this.pageChange.observers.length > 0;
     this.filterSubscription = this.filterService.onFilter().subscribe(
       (value) => {
+        // reset to first page
+        this.paginatorComponent.selectedPage = 1;
+        this.filterValue = value;
+        this.updateRows();
         this.filter.emit(value);
       }
     );
@@ -189,17 +196,51 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterViewChecked
         }
       );
     } else if (Array.isArray(this._data)) {
+      const data = this.filterData();
+      this.total = data.length;
       this.rows.length = 0;
-      this._data.some(
+      const rows = [];
+      const currentPage = this.paginatorComponent.currentPage;
+      data.some(
         (model: any, index: number) => {
-          if (index >= this.pageSize) {
+          if (index < currentPage.begin) {
+            return;
+          }
+          if (index > currentPage.end) {
             return true;
           }
-          this.rows[index] = new MdRowData(model);
+          rows.push(new MdRowData(model));
         }
       );
+      this.rows = rows;
       this.isLoading = false;
     }
+  }
+
+  private filterData() {
+    // filter
+    const fields = this.columns.map(
+      column => column.field
+    );
+    let data = this._data;
+    if (this.filterValue) {
+      data = data.filter(value => {
+        const s = this.filterValue
+          .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+          .toLocaleLowerCase().trim().split(/\s/);
+        for (const field of fields) {
+          // http://stackoverflow.com/questions/990904/remove-accents-diacritics-in-a-string-in-javascript
+          const v = (value[field] + '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase();
+          for (const i of s) {
+            if (v.indexOf(i) !== -1) {
+              return true;
+            }
+          }
+        }
+        return false;
+      });
+    }
+    return data;
   }
 
   _onPageChange(event) {
