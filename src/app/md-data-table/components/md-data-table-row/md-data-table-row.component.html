@@ -4,6 +4,6 @@
     (click)="onCellClick(column, thisCell)" #thisCell>
   <span class="mat-column-title">{{column.title}}</span>
   <span>
-    <template mdTableCell [mdTableCellColumn]="column" [mdTableCellModel]="row.model"></template>
+    <ng-template mdTableCell [mdTableCellColumn]="column" [mdTableCellModel]="row.model"></ng-template>
   </span>
 </td>

@@ -113,7 +113,7 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterViewChecked
     );
 
     if (this.filterable && !this.header) {
-      throw new Error('Can only use filter feature with table has header for now.')
+      throw new Error('Can only use filter feature with table has header for now.');
     }
   }
 
