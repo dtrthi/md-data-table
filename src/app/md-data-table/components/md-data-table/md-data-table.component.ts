@@ -173,7 +173,9 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterViewChecked
   }
 
   ngOnDestroy(): void {
-    this.filterSubscription.unsubscribe();
+    if (this.filterSubscription) {
+      this.filterSubscription.unsubscribe();
+    }
   }
 
   updateRows() {
