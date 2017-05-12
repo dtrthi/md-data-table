@@ -1,5 +1,20 @@
+:host {
+  position: relative;
+}
+
 button {
   width: inherit;
   height: inherit;
   line-height: inherit;
+}
+
+md-input-container {
+  position: absolute;
+  right: 0;
+  top: -16px;
+  width: 0;
+}
+
+[hidden] {
+  display: none !important;
 }

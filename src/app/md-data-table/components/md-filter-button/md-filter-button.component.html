@@ -1,2 +1,12 @@
-<button md-icon-button
-        i18n-mdTooltip mdTooltip="Filter"><md-icon>filter_list</md-icon></button>
+<form [formGroup]="filterForm">
+  <md-input-container floatPlaceholder="never" [@filterState2]="filterState">
+    <input mdInput i18n-placeholder placeholder="Filter" formControlName="input">
+  </md-input-container>
+</form>
+<button md-icon-button i18n-mdTooltip mdTooltip="Filter"
+        [@filterState]="filterState"
+        (@filterState.done)="onFilterStateDone($event)"
+        (click)="toggleFilterState()">
+  <md-icon [hidden]="isAnimating">filter_list</md-icon>
+  <md-icon [hidden]="!isAnimating">close</md-icon>
+</button>

@@ -138,8 +138,10 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterViewChecked
         // then set total cell width to header + footer
         this.elementRef.nativeElement.querySelector('.mat-data-table-head').style.width = `${sum}px`;
         this.elementRef.nativeElement.querySelector('.mat-data-table-tail').style.width = `${sum}px`;
-        const elementWidth = this.elementRef.nativeElement.offsetWidth;
-        this.header.rightGap = elementWidth - sum;
+        if (this.header) {
+          const elementWidth = this.elementRef.nativeElement.offsetWidth;
+          this.header.rightGap = elementWidth - sum;
+        }
       }
     }
   }
