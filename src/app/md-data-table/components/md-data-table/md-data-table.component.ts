@@ -1,9 +1,15 @@
 import {
-  AfterViewChecked, Component, ContentChild, ContentChildren, ElementRef, EventEmitter,
-  Input, OnInit, OnChanges, Output, SimpleChanges, ViewChild, HostBinding
+  AfterViewChecked, Component, ContentChild, ContentChildren, ElementRef, EventEmitter, HostBinding, Input, OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild
 } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 
+import { FilterService } from '../../services/filter.service';
 import { MdDataColumnComponent } from '../md-data-column/md-data-column.component';
 import { MdPaginatorComponent } from '../md-paginator/md-paginator.component';
 import { MdPagination } from '../../models/md-pagination';
@@ -14,8 +20,9 @@ import { MdTableHeaderComponent } from '../md-table-header/md-table-header.compo
   selector: 'md-data-table',
   templateUrl: './md-data-table.component.html',
   styleUrls: ['./md-data-table.component.scss'],
+  providers: [FilterService]
 })
-export class MdDataTableComponent implements OnChanges, OnInit, AfterViewChecked {
+export class MdDataTableComponent implements OnChanges, OnInit, AfterViewChecked, OnDestroy {
   private _fixedHeader: boolean;
   private _data: any[]|any;
   rows: MdRowData[] = [];
@@ -28,6 +35,8 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterViewChecked
 
   private width;
   private height;
+  private filterSubscription: Subscription;
+  private filterValue: string;
 
   get fixedHeader(): boolean {
     return this._fixedHeader;
@@ -50,7 +59,7 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterViewChecked
   }
 
   @Input() set pageSize(value) {
-    if (Number.isNaN(value)) {
+    if (isNaN(value)) {
       this._pageSize = 0;
       this._autoPageSize = true;
     } else {
@@ -74,17 +83,34 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterViewChecked
     }
   }
 
+  @Input() set filterable(value) {
+    if (value !== false) {
+      this.header.filterable = true;
+    }
+  }
+
   @Output() pageChange: EventEmitter<MdPagination> = new EventEmitter<MdPagination>();
   @Output() rowClick: EventEmitter<any> = new EventEmitter<any>();
+  @Output() filter = new EventEmitter<any>();
 
   @HostBinding('class.row-selectable') isRowSelectable = false;
 
   constructor(
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
+    private filterService: FilterService
   ) { }
 
   ngOnInit() {
     this.isRowSelectable = this.rowClick.observers.length > 0;
+    this.filterSubscription = this.filterService.onFilter().subscribe(
+      (value) => {
+        // reset to first page
+        this.paginatorComponent.selectedPage = 1;
+        this.filterValue = value;
+        this.updateRows();
+        this.filter.emit(value);
+      }
+    );
   }
 
   ngAfterViewChecked(): void {
@@ -132,6 +158,10 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterViewChecked
         // then set total cell width to header + footer
         this.elementRef.nativeElement.querySelector('.mat-data-table-head').style.width = `${sum}px`;
         this.elementRef.nativeElement.querySelector('.mat-data-table-tail').style.width = `${sum}px`;
+        if (this.header) {
+          const elementWidth = this.elementRef.nativeElement.offsetWidth;
+          this.header.rightGap = elementWidth - sum;
+        }
       }
     }
   }
@@ -140,6 +170,10 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterViewChecked
     if (changes.data) {
       this.updateRows();
     }
+  }
+
+  ngOnDestroy(): void {
+    this.filterSubscription.unsubscribe();
   }
 
   updateRows() {
@@ -162,17 +196,51 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterViewChecked
         }
       );
     } else if (Array.isArray(this._data)) {
+      const data = this.filterData();
+      this.total = data.length;
       this.rows.length = 0;
-      this._data.some(
+      const rows = [];
+      const currentPage = this.paginatorComponent.currentPage;
+      data.some(
         (model: any, index: number) => {
-          if (index >= this.pageSize) {
+          if (index < currentPage.begin) {
+            return;
+          }
+          if (index > currentPage.end) {
             return true;
           }
-          this.rows[index] = new MdRowData(model);
+          rows.push(new MdRowData(model));
         }
       );
+      this.rows = rows;
       this.isLoading = false;
     }
+  }
+
+  private filterData() {
+    // filter
+    const fields = this.columns.map(
+      column => column.field
+    );
+    let data = this._data;
+    if (this.filterValue) {
+      data = data.filter(value => {
+        const s = this.filterValue
+          .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+          .toLocaleLowerCase().trim().split(/\s/);
+        for (const field of fields) {
+          // http://stackoverflow.com/questions/990904/remove-accents-diacritics-in-a-string-in-javascript
+          const v = (value[field] + '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase();
+          for (const i of s) {
+            if (v.indexOf(i) !== -1) {
+              return true;
+            }
+          }
+        }
+        return false;
+      });
+    }
+    return data;
   }
 
   _onPageChange(event) {

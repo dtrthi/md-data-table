@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Http } from '@angular/http';
 
-import { MdPagination } from './md-data-table/models/md-pagination';
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

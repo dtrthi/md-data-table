@@ -43,24 +43,9 @@ $button-color-disabled: rgba(0, 0, 0, .26);
       width: $button-width;
       height: $button-width;
       line-height: $button-width;
-      min-width: initial;
-      padding: 0;
-      border-radius: 50%;
-
-      &:hover {
-        background-color: snow;
-      }
 
       &:disabled {
         color: $button-color-disabled;
-      }
-
-      /deep/ .mat-button-ripple {
-        border-radius: 50%;
-      }
-
-      /deep/ .mat-button-focus-overlay {
-        background-color: initial;
       }
     }
   }

@@ -4,16 +4,40 @@ $header-color: rgba(0, 0, 0, .87);
 $border-color: rgba(0, 0, 0, .12);
 $card-header-height: 64px;
 
+$button-width: 24px;
+$button-color: rgba(0, 0, 0, .54);
+
 div {
   display: flex;
   align-items: center;
   height: $card-header-height;
   padding-left: 24px;
+  padding-right: 14px;
   border-bottom: 1px solid $border-color;
   margin-bottom: -1px;
 
   span {
     font-size: $header-font-size;
     color: $header-color;
+
+    &:first-of-type {
+      flex: 1;
+    }
+  }
+
+  .card-action-icon {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    width: $button-width;
+    height: $button-width;
+    line-height: $button-width;
+
+    color: $button-color;
+
+    + .card-action-icon {
+      margin-left: $button-width;
+    }
   }
 }
