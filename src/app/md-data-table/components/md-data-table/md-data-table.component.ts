@@ -218,19 +218,17 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterViewChecked
   }
 
   private filterData() {
-    // filter
-    const fields = this.columns.map(
-      column => column.field
-    );
     let data = this._data;
     if (this.filterValue) {
       data = data.filter(value => {
         const s = this.filterValue
           .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
           .toLocaleLowerCase().trim().split(/\s/);
-        for (const field of fields) {
+        for (const column of this.columns) {
           // http://stackoverflow.com/questions/990904/remove-accents-diacritics-in-a-string-in-javascript
-          const v = (value[field] + '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase();
+          const v = (column.getFieldData(value) + '')
+            .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+            .toLocaleLowerCase();
           for (const i of s) {
             if (v.indexOf(i) !== -1) {
               return true;
