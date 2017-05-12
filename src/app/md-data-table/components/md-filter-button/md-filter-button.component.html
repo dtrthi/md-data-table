@@ -7,6 +7,6 @@
         [@filterState]="filterState"
         (@filterState.done)="onFilterStateDone($event)"
         (click)="toggleFilterState()">
-  <md-icon [hidden]="isAnimating">filter_list</md-icon>
-  <md-icon [hidden]="!isAnimating">close</md-icon>
+  <md-icon [hidden]="isOpening">filter_list</md-icon>
+  <md-icon [hidden]="!isOpening">close</md-icon>
 </button>

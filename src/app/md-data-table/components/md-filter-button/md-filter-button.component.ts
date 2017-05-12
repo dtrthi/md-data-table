@@ -34,7 +34,7 @@ import { FilterService } from '../../services/filter.service';
 })
 export class MdFilterButtonComponent implements OnInit {
   filterState = 'none';
-  isAnimating = false;
+  isOpening = false;
   filterForm: FormGroup;
   delay = 300;
 
@@ -55,7 +55,7 @@ export class MdFilterButtonComponent implements OnInit {
 
   toggleFilterState() {
     if (this.filterState === 'none') {
-      this.isAnimating = true;
+      this.isOpening = true;
       this.filterState = 'filtering';
     } else {
       this.filterState = 'none';
@@ -64,7 +64,8 @@ export class MdFilterButtonComponent implements OnInit {
 
   onFilterStateDone(event) {
     if (event.fromState === 'filtering' && event.toState === 'none') {
-      this.isAnimating = false;
+      this.isOpening = false;
+      this.filterForm.reset();
     }
   }
 }
