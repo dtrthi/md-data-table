@@ -1,11 +1,16 @@
 import {
-  AfterViewChecked, Component, ContentChild, ContentChildren, ElementRef, EventEmitter,
-  Input, OnInit, OnChanges, Output, SimpleChanges, ViewChild, HostBinding
+  AfterViewChecked, Component, ContentChild, ContentChildren, ElementRef, EventEmitter, HostBinding, Input, OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild
 } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 
+import { FilterService } from '../../services/filter.service';
 import { MdDataColumnComponent } from '../md-data-column/md-data-column.component';
-import { MdPaginatorComponent } from '../md-paginator/md-paginator.component';
 import { MdPagination } from '../../models/md-pagination';
 import { MdRowData } from '../../models/md-row-data';
 import { MdTableHeaderComponent } from '../md-table-header/md-table-header.component';
@@ -14,8 +19,9 @@ import { MdTableHeaderComponent } from '../md-table-header/md-table-header.compo
   selector: 'md-data-table',
   templateUrl: './md-data-table.component.html',
   styleUrls: ['./md-data-table.component.scss'],
+  providers: [FilterService]
 })
-export class MdDataTableComponent implements OnChanges, OnInit, AfterViewChecked {
+export class MdDataTableComponent implements OnChanges, OnInit, AfterViewChecked, OnDestroy {
   private _fixedHeader: boolean;
   private _data: any[]|any;
   rows: MdRowData[] = [];
@@ -28,6 +34,7 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterViewChecked
 
   private width;
   private height;
+  private filterSubscription: Subscription;
 
   get fixedHeader(): boolean {
     return this._fixedHeader;
@@ -40,7 +47,6 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterViewChecked
 
   @ViewChild('container') container;
   @ViewChild('body') body;
-  @ViewChild(MdPaginatorComponent) paginatorComponent;
   @ContentChild(MdTableHeaderComponent) header;
   @ContentChildren(MdDataColumnComponent) columns;
   @Input() total = 0;
@@ -82,15 +88,22 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterViewChecked
 
   @Output() pageChange: EventEmitter<MdPagination> = new EventEmitter<MdPagination>();
   @Output() rowClick: EventEmitter<any> = new EventEmitter<any>();
+  @Output() filter = new EventEmitter<any>();
 
   @HostBinding('class.row-selectable') isRowSelectable = false;
 
   constructor(
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
+    private filterService: FilterService
   ) { }
 
   ngOnInit() {
     this.isRowSelectable = this.pageChange.observers.length > 0;
+    this.filterSubscription = this.filterService.onFilter().subscribe(
+      (value) => {
+        this.filter.emit(value);
+      }
+    );
   }
 
   ngAfterViewChecked(): void {
@@ -150,6 +163,10 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterViewChecked
     if (changes.data) {
       this.updateRows();
     }
+  }
+
+  ngOnDestroy(): void {
+    this.filterSubscription.unsubscribe();
   }
 
   updateRows() {

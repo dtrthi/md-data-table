@@ -3,6 +3,7 @@
                  [fixedHeader]="true"
                  [filterable]="true"
                  (pageChange)="onPageChange($event)"
+                 (filter)="onFilter($event)"
                  fxFlex>
     <md-table-header title="Filterable"></md-table-header>
     <md-data-column title="Dessert (100g serving)"

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import 'rxjs/add/operator/debounceTime';
+
+import { FilterService } from '../../services/filter.service';
 
 @Component({
   selector: 'md-filter-button',
@@ -33,15 +36,21 @@ export class MdFilterButtonComponent implements OnInit {
   filterState = 'none';
   isAnimating = false;
   filterForm: FormGroup;
+  delay = 1000;
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private filterService: FilterService
   ) { }
 
   ngOnInit() {
     this.filterForm = this.fb.group({
       input: []
     });
+
+    this.filterForm.get('input').valueChanges
+      .debounceTime(this.delay)
+      .subscribe((value) => this.filterService.doFilter(value));
   }
 
   toggleFilterState() {

@@ -30,12 +30,15 @@ export class FilterableComponent implements OnInit {
   }
 
   onPageChange(event: MdPagination) {
-    console.log(event);
     this.http.get('assets/data.json').subscribe(
       response => {
         const data = response.json();
         this.subject.next(Array.isArray(data) && (this.total = data.length) && data.slice(event.begin, event.end + 1) || []);
       }
     );
+  }
+
+  onFilter(event) {
+    console.log(event);
   }
 }
