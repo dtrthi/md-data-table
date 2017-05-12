@@ -111,6 +111,10 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterViewChecked
         this.filter.emit(value);
       }
     );
+
+    if (this.filterable && !this.header) {
+      throw new Error('Can only use filter feature with table has header for now.')
+    }
   }
 
   ngAfterViewChecked(): void {
