@@ -230,18 +230,20 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterViewChecked
         const s = this.filterValue
           .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
           .toLocaleLowerCase().trim().split(/\s/);
-        for (const column of this.columns) {
-          // http://stackoverflow.com/questions/990904/remove-accents-diacritics-in-a-string-in-javascript
-          const v = (column.getFieldData(value) + '')
-            .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-            .toLocaleLowerCase();
-          for (const i of s) {
-            if (v.indexOf(i) !== -1) {
-              return true;
+        return this.columns.some(
+          column => {
+            // http://stackoverflow.com/questions/990904/remove-accents-diacritics-in-a-string-in-javascript
+            const v = (column.getFieldData(value) + '')
+              .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+              .toLocaleLowerCase();
+            for (const i of s) {
+              if (v.indexOf(i) !== -1) {
+                return true;
+              }
             }
+            return false;
           }
-        }
-        return false;
+        );
       });
     }
     return data;
