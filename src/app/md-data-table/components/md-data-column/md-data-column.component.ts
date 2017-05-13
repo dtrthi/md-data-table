@@ -17,6 +17,7 @@ export class MdDataColumnComponent implements OnInit {
   @Input() tooltip: string;
   @Input() numeric = false;
   @Input() editable: boolean|'inline' = false;
+  @Input() filterable = true;
 
   get placeholder() { return this._placeholder || this.title; }
 

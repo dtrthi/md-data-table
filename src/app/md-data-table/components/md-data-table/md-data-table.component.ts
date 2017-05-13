@@ -232,6 +232,10 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterViewChecked
           .toLocaleLowerCase().trim().split(/\s/);
         return this.columns.some(
           column => {
+            // prevent filter
+            if (!column.filterable) {
+              return false;
+            }
             // http://stackoverflow.com/questions/990904/remove-accents-diacritics-in-a-string-in-javascript
             const v = (column.getFieldData(value) + '')
               .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
