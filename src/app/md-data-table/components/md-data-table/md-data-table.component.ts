@@ -206,7 +206,7 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterViewChecked
       this.total = data.length;
       this.rows.length = 0;
       const rows = [];
-      const currentPage = this.paginatorComponent ? this.paginatorComponent.currentPage : {begin: 0, end: this.pageSize};
+      const currentPage = this.paginatorComponent ? this.paginatorComponent.currentPage : {begin: 0, end: this.pageSize - 1};
       data.some(
         (model: any, index: number) => {
           if (index < currentPage.begin) {
