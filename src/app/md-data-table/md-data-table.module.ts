@@ -6,7 +6,6 @@ import {
   MdButtonModule, MdDialogModule, MdIconModule, MdInputModule, MdProgressBarModule,
   MdTooltipModule
 } from '@angular/material';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { InlineDialogComponent } from './components/inline-dialog/inline-dialog.component';
 import { MdDataTableComponent } from './components/md-data-table/md-data-table.component';
@@ -20,7 +19,6 @@ import { MdTableHeaderComponent } from './components/md-table-header/md-table-he
 @NgModule({
   imports: [
     CommonModule,
-    BrowserAnimationsModule,
     FlexLayoutModule,
     MdButtonModule,
     MdDialogModule,
