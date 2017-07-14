@@ -3,8 +3,48 @@ import { MdPagination } from '../../models/md-pagination';
 
 @Component({
   selector: 'md-paginator',
-  templateUrl: './md-paginator.component.html',
-  styleUrls: ['./md-paginator.component.scss']
+  template: `
+    <div class="mat-paginator">
+      <div class="mat-paginator-current-page">
+        {{pageStart}}-{{pageEnd}} of {{total}}
+      </div>
+      <div class="mat-paginator-navigation">
+        <button md-icon-button (click)="onPrevClick()" [disabled]="pageStart <= 1">
+          <md-icon>chevron_left</md-icon>
+        </button>
+        <button md-icon-button (click)="onNextClick()" [disabled]="pageEnd >= total">
+          <md-icon>chevron_right</md-icon>
+        </button>
+      </div>
+    </div>
+  `,
+  styles: [
+    `.mat-paginator {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      align-content: center;
+      align-items: center; }
+    .mat-paginator .mat-paginator-current-page {
+      margin: 0 16px; }
+    .mat-paginator .mat-paginator-navigation {
+      display: flex;
+      margin: 0 14px 0 16px;
+      justify-content: space-between;
+      align-items: center;
+      width: 72px; }
+    .mat-paginator .mat-paginator-navigation button {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      line-height: 24px; }
+    .mat-paginator .mat-paginator-navigation button:disabled {
+      color: rgba(0, 0, 0, 0.26); }
+    `
+  ]
 })
 export class MdPaginatorComponent implements OnInit {
 

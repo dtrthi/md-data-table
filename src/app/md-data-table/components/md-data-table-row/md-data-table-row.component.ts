@@ -1,25 +1,61 @@
-import { Component, Input, OnInit, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, ViewContainerRef } from '@angular/core';
+import { MdDialog, MdDialogConfig } from '@angular/material';
 
 import { MdRowData } from '../../models/md-row-data';
+import { TableEventService } from '../../services/table-event.service';
 import { MdDataColumnComponent } from '../md-data-column/md-data-column.component';
-import { MdDialog, MdDialogConfig, MdDialogRef } from '@angular/material';
 import { InlineDialogComponent } from '../inline-dialog/inline-dialog.component';
 
 @Component({
   selector: 'md-data-table-row,[md-data-table-row],[mdDataTableRow]',
-  templateUrl: './md-data-table-row.component.html',
-  styleUrls: ['./md-data-table-row.component.scss']
+  template: `
+    <td *ngFor="let column of columns"
+        [class.mat-numeric-column]="column.numeric"
+        [class.mat-editable]="column.editable"
+        (click)="onCellClick(column, thisCell)" #thisCell>
+      <span class="mat-column-title">{{column.title}}</span>
+      <span>
+        <ng-template mdTableCell [mdTableCellColumn]="column" [mdTableCellModel]="row.model"></ng-template>
+      </span>
+    </td>
+  `,
+  styles: [
+    `td {
+      position: relative;
+      text-align: left;
+      vertical-align: middle;
+      box-sizing: border-box;
+      padding: 0 12px; }
+    td:first-of-type {
+      padding-left: 24px; }
+    td:last-of-type {
+      padding-right: 24px; }
+    td.mat-numeric-column {
+      text-align: right; }
+    td.mat-editable {
+      cursor: pointer; }
+    td .mat-column-title {
+      display: none;
+      font-size: 12px;
+      font-weight: 500; }
+    `
+  ]
 })
-export class MdDataTableRowComponent implements OnInit {
+export class MdDataTableRowComponent implements OnInit, AfterViewInit {
   @Input() row: MdRowData;
   @Input() columns: MdDataColumnComponent[];
 
   constructor(
     private dialog: MdDialog,
-    private viewContainerRef: ViewContainerRef
+    private viewContainerRef: ViewContainerRef,
+    private tableEvent: TableEventService
   ) { }
 
   ngOnInit() {
+  }
+
+  ngAfterViewInit(): void {
+    this.tableEvent.raiseWidthChange();
   }
 
   onCellClick(column, cellEl) {

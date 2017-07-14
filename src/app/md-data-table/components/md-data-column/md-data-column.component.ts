@@ -4,8 +4,12 @@ import { isObject } from 'util';
 
 @Component({
   selector: 'md-data-column',
-  templateUrl: './md-data-column.component.html',
-  styleUrls: ['./md-data-column.component.scss']
+  template: `
+    <ng-content select="template"></ng-content>
+    <ng-template #internalTemplate let-model="mdTableCellModel">
+      {{getFieldData(model)}}
+    </ng-template>
+  `
 })
 export class MdDataColumnComponent implements OnInit {
   private _placeholder: string;
