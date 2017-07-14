@@ -1,0 +1,24 @@
+{
+  "name": "@dtrthi/md-data-table",
+  "version": "0.3.0-alpha.3",
+  "description": "A handmade material table for use before the official one published.",
+  "main": "bundles/data-table.umd.js",
+  "module": "index.js",
+  "typings": "index.d.ts",
+  "scripts": {
+    "transpile": "ngc",
+    "test": "ng test"
+  },
+  "keywords": [
+    "angular",
+    "material",
+    "design",
+    "data",
+    "table"
+  ],
+  "author": "dtrthi <thi.dtr@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@angular/material": "2.0.0-beta.7"
+  }
+}

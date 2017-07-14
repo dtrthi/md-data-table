@@ -7,8 +7,39 @@ import { FilterService } from '../../services/filter.service';
 
 @Component({
   selector: 'md-filter-button',
-  templateUrl: './md-filter-button.component.html',
-  styleUrls: ['./md-filter-button.component.scss'],
+  template: `
+    <form [formGroup]="filterForm">
+      <md-input-container floatPlaceholder="never" [@filterState2]="filterState">
+        <input mdInput i18n-placeholder placeholder="Filter" formControlName="input">
+      </md-input-container>
+    </form>
+    <button md-icon-button i18n-mdTooltip mdTooltip="Filter"
+            [@filterState]="filterState"
+            (@filterState.done)="onFilterStateDone($event)"
+            (click)="toggleFilterState()">
+      <md-icon [hidden]="isOpening">search</md-icon>
+      <md-icon [hidden]="!isOpening">close</md-icon>
+    </button>
+  `,
+  styles: [
+    `:host {
+      position: relative; }
+
+    button {
+      width: inherit;
+      height: inherit;
+      line-height: inherit; }
+
+    md-input-container {
+      position: absolute;
+      right: 0;
+      top: -16px;
+      width: 0; }
+
+    [hidden] {
+      display: none !important; }
+    `
+  ],
   animations: [
     trigger('filterState', [
       state('none', style({
