@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder } from '@angular/forms';
 import { Http } from '@angular/http';
+import { PageEvent } from '@angular/material';
 import { Subject } from 'rxjs/Subject';
-
-import { MdPagination } from '../../md-data-table/models/md-pagination';
 
 @Component({
   selector: 'app-inline-editing',
@@ -44,12 +43,13 @@ export class InlineEditingComponent implements OnInit {
     );
   }
 
-  onPageChange(event: MdPagination) {
+  onPageChange(event: PageEvent) {
     console.log(event);
     this.http.get('assets/data.json').subscribe(
       response => {
         const data = response.json();
-        this.subject.next(Array.isArray(data) && (this.total = data.length) && data.slice(event.begin, event.end + 1) || []);
+        const begin = event.pageIndex * event.pageSize;
+        this.subject.next(Array.isArray(data) && (this.total = data.length) && data.slice(begin, begin + event.pageSize) || []);
       }
     );
   }

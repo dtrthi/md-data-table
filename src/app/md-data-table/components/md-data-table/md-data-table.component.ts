@@ -1,18 +1,26 @@
 import {
-  AfterViewChecked, Component, ContentChild, ContentChildren, ElementRef, EventEmitter, HostBinding, Input, OnChanges,
+  AfterViewChecked,
+  Component,
+  ContentChild,
+  ContentChildren,
+  ElementRef,
+  EventEmitter,
+  HostBinding,
+  Input,
+  OnChanges,
   OnDestroy,
   OnInit,
   Output,
   SimpleChanges,
   ViewChild
 } from '@angular/core';
+import { MdPaginator, PageEvent } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
 import { FilterService } from '../../services/filter.service';
 import { TableEventService } from '../../services/table-event.service';
 import { MdDataColumnComponent } from '../md-data-column/md-data-column.component';
-import { MdPaginatorComponent } from '../md-paginator/md-paginator.component';
 import { MdPagination } from '../../models/md-pagination';
 import { MdRowData } from '../../models/md-row-data';
 import { MdTableHeaderComponent } from '../md-table-header/md-table-header.component';
@@ -51,7 +59,7 @@ import { MdTableHeaderComponent } from '../md-table-header/md-table-header.compo
         <tfoot *ngIf="!fixedHeader">
         <tr>
           <td [attr.colspan]="columns.length">
-            <md-paginator [total]="total" [selectedRange]="pageSize" (pageChange)="_onPageChange($event)"></md-paginator>
+            <md-paginator [length]="total" [pageSize]="pageSize" (page)="_onPageChange($event)"></md-paginator>
           </td>
         </tr>
         </tfoot>
@@ -61,7 +69,7 @@ import { MdTableHeaderComponent } from '../md-table-header/md-table-header.compo
       <tfoot>
       <tr>
         <td [attr.colspan]="columns.length">
-          <md-paginator [total]="total" [selectedRange]="pageSize"  (pageChange)="_onPageChange($event)"></md-paginator>
+          <md-paginator [length]="total" [pageSize]="pageSize"  (page)="_onPageChange($event)"></md-paginator>
         </td>
       </tr>
       </tfoot>
@@ -114,10 +122,11 @@ import { MdTableHeaderComponent } from '../md-table-header/md-table-header.compo
     table tfoot tr {
       border-top: 1px solid rgba(0, 0, 0, 0.12);
       font-size: 12px;
-      color: rgba(0, 0, 0, 0.54);
-      height: 56px; }
+      color: rgba(0, 0, 0, 0.54); }
+    table tfoot tr td {
+      padding: 0; }
     table tfoot tr td md-paginator {
-      float: right; }
+      margin-top: -1px; }
 
     .mat-table-container {
       max-width: 100%;
@@ -182,7 +191,7 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterViewChecked
 
   @ViewChild('container') container;
   @ViewChild('body') body;
-  @ViewChild(MdPaginatorComponent) paginatorComponent;
+  @ViewChild(MdPaginator) paginatorComponent: MdPaginator;
   @ContentChild(MdTableHeaderComponent) header;
   @ContentChildren(MdDataColumnComponent) columns;
   @Input() total = 0;
@@ -209,7 +218,7 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterViewChecked
     if (value instanceof Observable) {
       this.ajax = true;
     } else if (Array.isArray(this._data)) {
-      this.pageChange.subscribe(() => this.updateRows());
+      this.pageChange.subscribe((pageEvent) => this.updateRows(pageEvent));
       if (this.total !== this._data.length) {
         this.total = this._data.length;
       }
@@ -239,7 +248,7 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterViewChecked
     this.filterSubscription = this.filterService.onFilter().subscribe(
       (value) => {
         // reset to first page
-        this.paginatorComponent.selectedPage = 1;
+        this.paginatorComponent.pageIndex = 0;
         this.filterValue = value;
         this.updateRows();
         this.filter.emit(value);
@@ -318,7 +327,7 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterViewChecked
     }
   }
 
-  updateRows() {
+  updateRows(pageEvent?: PageEvent) {
     if (this.ajax) {
       this.isLoading = true;
       this._data.subscribe(
@@ -342,7 +351,11 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterViewChecked
       this.total = data.length;
       this.rows.length = 0;
       const rows = [];
-      const currentPage = this.paginatorComponent ? this.paginatorComponent.currentPage : {begin: 0, end: this.pageSize - 1};
+      let currentPage = {begin: 0, end: this.pageSize - 1};
+      if (pageEvent) {
+        const begin = pageEvent.pageIndex * pageEvent.pageSize;
+        currentPage = {begin: begin, end: begin + pageEvent.pageSize - 1};
+      }
       data.some(
         (model: any, index: number) => {
           if (index < currentPage.begin) {

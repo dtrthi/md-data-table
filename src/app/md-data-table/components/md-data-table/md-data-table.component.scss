@@ -89,11 +89,12 @@ table {
       border-top: 1px solid $border-color;
       font-size: $footer-font-size;
       color: $footer-color;
-      height: $footer-height;
 
       td {
+        padding: 0;
+
         md-paginator {
-          float: right;
+          margin-top: -1px;
         }
       }
     }
