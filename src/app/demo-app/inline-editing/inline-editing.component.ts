@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { CollectionViewer, DataSource } from '@angular/cdk';
 import { FormArray, FormBuilder } from '@angular/forms';
 import { Http } from '@angular/http';
-import { PageEvent } from '@angular/material';
-import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-inline-editing',
@@ -10,10 +10,9 @@ import { Subject } from 'rxjs/Subject';
   styleUrls: ['./inline-editing.component.scss']
 })
 export class InlineEditingComponent implements OnInit {
-  fetchData: any;
+  dataSource: DataSource<any>;
   total = 0;
   private formArray: FormArray;
-  private subject: Subject<any>;
 
   constructor(
     private fb: FormBuilder,
@@ -22,15 +21,7 @@ export class InlineEditingComponent implements OnInit {
 
   ngOnInit() {
     this.buildForm();
-
-    this.subject = new Subject();
-    this.http.get('assets/data.json').subscribe(
-      response => {
-        const data = response.json();
-        this.subject.next(Array.isArray(data) && (this.total = data.length) && data.slice(0, 11) || []);
-      }
-    );
-    this.fetchData = this.subject.asObservable();
+    this.dataSource = new DummyDataSource(this.http);
   }
 
   onFieldChange(event) {
@@ -43,22 +34,20 @@ export class InlineEditingComponent implements OnInit {
     );
   }
 
-  onPageChange(event: PageEvent) {
-    console.log(event);
-    this.http.get('assets/data.json').subscribe(
-      response => {
-        const data = response.json();
-        const begin = event.pageIndex * event.pageSize;
-        this.subject.next(Array.isArray(data) && (this.total = data.length) && data.slice(begin, begin + event.pageSize) || []);
-      }
-    );
-  }
-
-  logFormArray() {
-    console.log(this.formArray.value);
-  }
-
   private buildForm() {
     this.formArray = this.fb.array([]);
   }
+}
+
+class DummyDataSource extends DataSource<any> {
+
+  constructor(private http: Http) {
+    super();
+  }
+
+  connect(collectionViewer: CollectionViewer): Observable<any[]> {
+    return this.http.get('assets/data.json').map(response => response.json());
+  }
+
+  disconnect(collectionViewer: CollectionViewer): void { }
 }

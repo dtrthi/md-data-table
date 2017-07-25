@@ -1,3 +1,10 @@
+## 0.5.0-alpha.0
+
+### Features
+
+* Use md-paginator from @angular/material.
+* Support MdDataSource.
+
 ## 0.3.0-alpha.3.x
 
 ### Bug Fixes
