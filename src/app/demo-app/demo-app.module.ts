@@ -4,12 +4,16 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '@angular/material';
 
+import { DataSourceComponent } from './data-source/data-source.component';
+import { DataSourceWithFilterComponent } from './data-source-with-filter/data-source-with-filter.component';
 import { FilterableComponent } from './filterable/filterable.component';
 import { InlineEditingComponent } from './inline-editing/inline-editing.component';
 import { MdDataTableModule } from '../md-data-table/md-data-table.module';
 
 @NgModule({
   declarations: [
+    DataSourceComponent,
+    DataSourceWithFilterComponent,
     FilterableComponent,
     InlineEditingComponent
   ],
@@ -21,6 +25,8 @@ import { MdDataTableModule } from '../md-data-table/md-data-table.module';
     MdDataTableModule
   ],
   exports: [
+    DataSourceComponent,
+    DataSourceWithFilterComponent,
     FilterableComponent,
     InlineEditingComponent
   ]

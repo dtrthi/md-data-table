@@ -14,9 +14,12 @@ import {
   SimpleChanges,
   ViewChild
 } from '@angular/core';
+import { CollectionViewer, DataSource } from '@angular/cdk';
 import { MdPaginator, PageEvent } from '@angular/material';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/operator/takeUntil';
 
 import { FilterService } from '../../services/filter.service';
 import { TableEventService } from '../../services/table-event.service';
@@ -24,6 +27,7 @@ import { MdDataColumnComponent } from '../md-data-column/md-data-column.componen
 import { MdPagination } from '../../models/md-pagination';
 import { MdRowData } from '../../models/md-row-data';
 import { MdTableHeaderComponent } from '../md-table-header/md-table-header.component';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'md-data-table',
@@ -164,21 +168,25 @@ import { MdTableHeaderComponent } from '../md-table-header/md-table-header.compo
   ],
   providers: [FilterService, TableEventService]
 })
-export class MdDataTableComponent implements OnChanges, OnInit, AfterViewChecked, OnDestroy {
+export class MdDataTableComponent implements CollectionViewer, OnChanges, OnInit, AfterViewChecked, OnDestroy {
   private _fixedHeader: boolean;
+  private _onDestroy = new Subject();
   private _data: any[]|any;
+  private _dataSource: DataSource<any>;
   rows: MdRowData[] = [];
   private scrollable = false;
   isLoading = true;
   private ajax = false;
-
   private _pageSize: number;
-  private _autoPageSize = false;
 
+  private _autoPageSize = false;
   private width;
+
   private height;
   private filterSubscription: Subscription;
   private filterValue: string;
+
+  viewChange = new BehaviorSubject<{ start: number; end: number }>({ start: 0, end: Number.MAX_VALUE });
 
   get fixedHeader(): boolean {
     return this._fixedHeader;
@@ -209,6 +217,30 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterViewChecked
     }
   }
 
+  get dataSource() {
+    return this._dataSource;
+  }
+
+  set dataSource(dataSource) {
+    if (this._dataSource !== dataSource) {
+      this._data = [];
+
+      if (this._dataSource) {
+        this._dataSource.disconnect(this);
+      }
+
+      this._dataSource = dataSource;
+
+      if (this._dataSource) {
+        this.dataSource.connect(this).takeUntil(this._onDestroy)
+          .subscribe(data => {
+            this.data = data;
+            this.updateRows();
+          });
+      }
+    }
+  }
+
   get data(): any[]|any {
     return this._data;
   }
@@ -222,6 +254,8 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterViewChecked
       if (this.total !== this._data.length) {
         this.total = this._data.length;
       }
+    } else if (value instanceof DataSource) {
+      this.dataSource = value;
     }
   }
 
@@ -322,8 +356,15 @@ export class MdDataTableComponent implements OnChanges, OnInit, AfterViewChecked
   }
 
   ngOnDestroy(): void {
+    this._onDestroy.next();
+    this._onDestroy.complete();
+
     if (this.filterSubscription) {
       this.filterSubscription.unsubscribe();
+    }
+
+    if (this._dataSource) {
+      this._dataSource.disconnect(this);
     }
   }
 
