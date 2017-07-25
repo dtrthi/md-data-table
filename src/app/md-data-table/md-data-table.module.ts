@@ -3,7 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
-  MdButtonModule, MdDialogModule, MdIconModule, MdInputModule, MdProgressBarModule,
+  MdButtonModule,
+  MdDialogModule,
+  MdIconModule,
+  MdInputModule,
+  MdPaginatorModule,
+  MdProgressBarModule,
   MdTooltipModule
 } from '@angular/material';
 
@@ -12,7 +17,6 @@ import { MdDataTableComponent } from './components/md-data-table/md-data-table.c
 import { MdDataColumnComponent } from './components/md-data-column/md-data-column.component';
 import { MdDataTableRowComponent } from './components/md-data-table-row/md-data-table-row.component';
 import { MdFilterButtonComponent } from './components/md-filter-button/md-filter-button.component';
-import { MdPaginatorComponent } from './components/md-paginator/md-paginator.component';
 import { MdTableCellDirective } from './directives/md-table-cell.directive';
 import { MdTableHeaderComponent } from './components/md-table-header/md-table-header.component';
 
@@ -24,6 +28,7 @@ import { MdTableHeaderComponent } from './components/md-table-header/md-table-he
     MdDialogModule,
     MdIconModule,
     MdInputModule,
+    MdPaginatorModule,
     MdProgressBarModule,
     MdTooltipModule,
     ReactiveFormsModule
@@ -34,7 +39,6 @@ import { MdTableHeaderComponent } from './components/md-table-header/md-table-he
     MdDataColumnComponent,
     MdDataTableRowComponent,
     MdFilterButtonComponent,
-    MdPaginatorComponent,
     MdTableCellDirective,
     MdTableHeaderComponent
   ],
