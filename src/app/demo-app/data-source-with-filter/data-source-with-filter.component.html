@@ -1,0 +1,32 @@
+<md-card class="data-table-card" fxFlex fxLayout="column" [style.height.px]="570">
+  <md-data-table [data]="data"
+                 [pageSize]="8"
+                 [fixedHeader]="true"
+                 [filterable]="true"
+                 fxFlex>
+    <md-table-header heading="Datasource with filter"></md-table-header>
+    <md-data-column title="Dessert (100g serving)"
+                    field="name"></md-data-column>
+    <md-data-column title="Calories"
+                    field="calories"
+                    numeric="true"></md-data-column>
+    <md-data-column title="Fat (g)"
+                    field="fat"
+                    numeric="true"></md-data-column>
+    <md-data-column title="Carbs (g)"
+                    field="carbs"
+                    numeric="true"></md-data-column>
+    <md-data-column title="Protein (g)"
+                    field="protein"
+                    numeric="true"></md-data-column>
+    <md-data-column title="Sodium (mg)"
+                    field="sodium"
+                    numeric="true"></md-data-column>
+    <md-data-column title="Calcium (%)"
+                    field="calcium"
+                    numeric="true"></md-data-column>
+    <md-data-column title="Iron (%)"
+                    field="iron"
+                    numeric="true"></md-data-column>
+  </md-data-table>
+</md-card>

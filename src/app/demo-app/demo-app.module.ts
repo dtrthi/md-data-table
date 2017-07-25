@@ -5,17 +5,17 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '@angular/material';
 
 import { DataSourceComponent } from './data-source/data-source.component';
+import { DataSourceWithFilterComponent } from './data-source-with-filter/data-source-with-filter.component';
 import { FilterableComponent } from './filterable/filterable.component';
 import { InlineEditingComponent } from './inline-editing/inline-editing.component';
 import { MdDataTableModule } from '../md-data-table/md-data-table.module';
-import { DataSourceWithFilterComponent } from './src/app/demo-app/data-source-with-filter/data-source-with-filter.component';
 
 @NgModule({
   declarations: [
     DataSourceComponent,
+    DataSourceWithFilterComponent,
     FilterableComponent,
-    InlineEditingComponent,
-    DataSourceWithFilterComponent
+    InlineEditingComponent
   ],
   imports: [
     CommonModule,
@@ -26,6 +26,7 @@ import { DataSourceWithFilterComponent } from './src/app/demo-app/data-source-wi
   ],
   exports: [
     DataSourceComponent,
+    DataSourceWithFilterComponent,
     FilterableComponent,
     InlineEditingComponent
   ]
