@@ -1,3 +1,7 @@
+## 0.5.0-alpha.1
+
+* Update to compatible with @angular/material beta.10
+
 ## 0.5.0-alpha.0
 
 ### Features

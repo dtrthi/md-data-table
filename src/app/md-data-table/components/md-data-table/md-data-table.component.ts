@@ -14,7 +14,7 @@ import {
   SimpleChanges,
   ViewChild
 } from '@angular/core';
-import { CollectionViewer, DataSource } from '@angular/cdk';
+import { CollectionViewer, DataSource } from '@angular/cdk/collections';
 import { MdPaginator, PageEvent } from '@angular/material';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';

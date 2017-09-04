@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CollectionViewer, DataSource } from '@angular/cdk';
+import { CollectionViewer, DataSource } from '@angular/cdk/collections';
 import { FormArray, FormBuilder } from '@angular/forms';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
