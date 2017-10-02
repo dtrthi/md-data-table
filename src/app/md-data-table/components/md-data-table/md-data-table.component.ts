@@ -234,7 +234,7 @@ export class MdDataTableComponent implements CollectionViewer, OnChanges, OnInit
       if (this._dataSource) {
         this.dataSource.connect(this).takeUntil(this._onDestroy)
           .subscribe(data => {
-            this.data = data;
+            this._data = data;
             this.updateRows();
           });
       }
@@ -387,6 +387,19 @@ export class MdDataTableComponent implements CollectionViewer, OnChanges, OnInit
           this.isLoading = false;
         }
       );
+    } else if (this._dataSource) {
+      if (Array.isArray(this._data) && this._data.length) {
+        this.rows.length = 0;
+        this._data.forEach(
+          (model: any, index: number) => {
+            if (index >= this.pageSize) {
+              return true;
+            }
+            this.rows[index] = new MdRowData(model);
+          }
+        );
+      }
+      this.isLoading = false;
     } else if (Array.isArray(this._data)) {
       const data = this.filterData();
       this.total = data.length;

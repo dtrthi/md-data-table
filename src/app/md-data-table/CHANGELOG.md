@@ -1,3 +1,7 @@
+## 0.5.2
+
+* Support for paging data source, add demo component.
+
 ## 0.5.1
 
 * Fix bug in pageChange event (#14)
