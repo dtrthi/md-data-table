@@ -293,7 +293,7 @@ export class MdDataTableComponent implements CollectionViewer, OnChanges, OnInit
       throw new Error('Can only use filter feature with table has header for now.');
     }
 
-    this.tableEvent.widthChange.subscribe(() => this.updateHeaderWidth());
+    this.tableEvent.widthChange.subscribe(() => { if (this.scrollable) this.updateHeaderWidth(); });
   }
 
   ngAfterViewChecked(): void {

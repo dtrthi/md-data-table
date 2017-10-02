@@ -6,9 +6,9 @@ import { MdDialogRef } from '@angular/material';
   selector: 'md-inline-dialog',
   template: `
     <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
-      <md-input-container [style.text-align]="isNumeric ? 'end' : 'start'" floatPlaceholder="never">
-        <input mdInput placeholder="{{placeholder}}" formControlName="value">
-      </md-input-container>
+      <md-form-field floatPlaceholder="never">
+        <input mdInput placeholder="{{placeholder}}" formControlName="value" [style.text-align]="isNumeric ? 'end' : 'start'">
+      </md-form-field>
     </form>
   `,
   styles: [
@@ -18,11 +18,12 @@ import { MdDialogRef } from '@angular/material';
     form {
       flex: 1;
       display: flex; }
-    form md-input-container {
+    form md-form-field {
       flex: 1;
       margin-top: -15px;
-      margin-bottom: -18px; }
-    form md-input-container md-hint {
+      margin-bottom: -18px;
+      width: auto; }
+    form md-form-field md-hint {
       font-size: 80%; }
     form [mdInput] {
       font-size: 14px; }

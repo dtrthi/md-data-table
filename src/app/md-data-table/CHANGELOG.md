@@ -1,3 +1,11 @@
+## 0.5.0-alpha.3 / 0.3.0-alpha.3.5
+
+* Revert change with updateHeaderWidth - only when use scroll table
+
+## 0.5.0-alpha.2
+
+* Update to compatible with @angular/material beta.10
+
 ## 0.5.0-alpha.1
 
 * Update to compatible with @angular/material beta.10
