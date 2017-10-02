@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { MaterialModule } from '@angular/material';
+import { MdCardModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { MdDataTableModule } from './md-data-table/md-data-table.module';
@@ -20,7 +20,7 @@ import { DemoAppModule } from './demo-app/demo-app.module';
     FlexLayoutModule,
     FormsModule,
     HttpModule,
-    MaterialModule,
+    MdCardModule,
     MdDataTableModule,
     DemoAppModule
   ],

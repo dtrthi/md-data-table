@@ -265,7 +265,7 @@ export class MdDataTableComponent implements CollectionViewer, OnChanges, OnInit
     }
   }
 
-  @Output() pageChange: EventEmitter<MdPagination> = new EventEmitter<MdPagination>();
+  @Output() pageChange: EventEmitter<PageEvent> = new EventEmitter<PageEvent>();
   @Output() rowClick: EventEmitter<any> = new EventEmitter<any>();
   @Output() filter = new EventEmitter<any>();
 
@@ -443,7 +443,7 @@ export class MdDataTableComponent implements CollectionViewer, OnChanges, OnInit
     return data;
   }
 
-  _onPageChange(event) {
+  _onPageChange(event: PageEvent) {
     this.isLoading = true;
     this.pageChange.emit(event);
 
