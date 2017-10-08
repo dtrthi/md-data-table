@@ -1,3 +1,7 @@
+## 0.5.3
+
+* Replace md prefix by mat for compatibility with @angular/material@beta.12
+
 ## 0.5.1
 
 * Fix bug in pageChange event (#14)
