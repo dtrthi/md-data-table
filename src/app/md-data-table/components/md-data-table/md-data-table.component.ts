@@ -280,11 +280,16 @@ export class MdDataTableComponent implements CollectionViewer, OnChanges, OnInit
     this.isRowSelectable = this.rowClick.observers.length > 0;
     this.filterSubscription = this.filterService.onFilter().subscribe(
       (value) => {
+        this.isLoading = true;
         // reset to first page
         this.paginatorComponent.pageIndex = 0;
+        this.filter.emit(value);
+        if (this._dataSource) {
+          return;
+        }
+
         this.filterValue = value;
         this.updateRows();
-        this.filter.emit(value);
       }
     );
 

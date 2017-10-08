@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
 
 import { FilterService } from '../../services/filter.service';
 
@@ -81,6 +82,7 @@ export class MdFilterButtonComponent implements OnInit {
 
     this.filterForm.get('input').valueChanges
       .debounceTime(this.delay)
+      .distinctUntilChanged()
       .subscribe((value) => this.filterService.doFilter(value));
   }
 

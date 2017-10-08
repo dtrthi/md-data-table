@@ -10,6 +10,7 @@ import { FilterableComponent } from './filterable/filterable.component';
 import { InlineEditingComponent } from './inline-editing/inline-editing.component';
 import { MdDataTableModule } from '../md-data-table/md-data-table.module';
 import { PagingDataSourceComponent } from './paging-data-source/paging-data-source.component';
+import { PagingDataSourceWithFilterComponent } from './paging-data-source-with-filter/paging-data-source-with-filter.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { PagingDataSourceComponent } from './paging-data-source/paging-data-sour
     FilterableComponent,
     InlineEditingComponent,
     PagingDataSourceComponent,
+    PagingDataSourceWithFilterComponent,
   ],
   imports: [
     CommonModule,
@@ -32,6 +34,7 @@ import { PagingDataSourceComponent } from './paging-data-source/paging-data-sour
     FilterableComponent,
     InlineEditingComponent,
     PagingDataSourceComponent,
+    PagingDataSourceWithFilterComponent,
   ]
 })
 export class DemoAppModule { }
