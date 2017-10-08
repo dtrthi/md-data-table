@@ -2,8 +2,8 @@
   {{title}}
 </h1>
 
-<md-card class="data-table-card" fxLayout="column" [style.height.px]="570">
-  <md-card-title>Ajax Paging</md-card-title>
+<mat-card class="data-table-card" fxLayout="column" [style.height.px]="570">
+  <mat-card-title>Ajax Paging</mat-card-title>
   <md-data-table [data]="data" [total]="total" [pageSize]="11" fixedHeader="true" (rowClick)="onRowClick($event)" fxFlex>
     <md-data-column title="Dessert (100g serving)"
                           field="name"
@@ -37,7 +37,7 @@
                           numeric="true"
                           tooltip="Iron (%)"></md-data-column>
   </md-data-table>
-</md-card>
+</mat-card>
 <hr>
 
 <app-inline-editing></app-inline-editing>
