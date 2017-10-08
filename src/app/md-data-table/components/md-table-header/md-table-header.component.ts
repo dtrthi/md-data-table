@@ -7,8 +7,8 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
       <span *ngIf="heading">{{heading}}</span>
       <ng-content></ng-content>
       <md-filter-button class="card-action-icon" *ngIf="filterable"></md-filter-button>
-      <button md-icon-button class="card-action-icon"
-              i18n-mdTooltip mdTooltip="More Options" *ngIf="false"><md-icon>more_vert</md-icon></button>
+      <button mat-icon-button class="card-action-icon"
+              i18n-matTooltip matTooltip="More Options" *ngIf="false"><mat-icon>more_vert</mat-icon></button>
     </div>
   `,
   styles: [

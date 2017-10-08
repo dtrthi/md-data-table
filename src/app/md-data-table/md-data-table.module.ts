@@ -3,13 +3,13 @@ import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
-  MdButtonModule,
-  MdDialogModule,
-  MdIconModule,
-  MdInputModule,
-  MdPaginatorModule,
-  MdProgressBarModule,
-  MdTooltipModule
+  MatButtonModule,
+  MatDialogModule,
+  MatIconModule,
+  MatInputModule,
+  MatPaginatorModule,
+  MatProgressBarModule,
+  MatTooltipModule
 } from '@angular/material';
 
 import { InlineDialogComponent } from './components/inline-dialog/inline-dialog.component';
@@ -24,13 +24,13 @@ import { MdTableHeaderComponent } from './components/md-table-header/md-table-he
   imports: [
     CommonModule,
     FlexLayoutModule,
-    MdButtonModule,
-    MdDialogModule,
-    MdIconModule,
-    MdInputModule,
-    MdPaginatorModule,
-    MdProgressBarModule,
-    MdTooltipModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatIconModule,
+    MatInputModule,
+    MatPaginatorModule,
+    MatProgressBarModule,
+    MatTooltipModule,
     ReactiveFormsModule
   ],
   declarations: [

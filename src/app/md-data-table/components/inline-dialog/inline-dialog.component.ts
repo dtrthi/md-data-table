@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MdDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'md-inline-dialog',
   template: `
     <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
-      <md-form-field floatPlaceholder="never">
-        <input mdInput placeholder="{{placeholder}}" formControlName="value" [style.text-align]="isNumeric ? 'end' : 'start'">
-      </md-form-field>
+      <mat-form-field floatPlaceholder="never">
+        <input matInput placeholder="{{placeholder}}" formControlName="value" [style.text-align]="isNumeric ? 'end' : 'start'">
+      </mat-form-field>
     </form>
   `,
   styles: [
@@ -18,14 +18,14 @@ import { MdDialogRef } from '@angular/material';
     form {
       flex: 1;
       display: flex; }
-    form md-form-field {
+    form mat-form-field {
       flex: 1;
       margin-top: -15px;
       margin-bottom: -18px;
       width: auto; }
-    form md-form-field md-hint {
+    form mat-form-field mat-hint {
       font-size: 80%; }
-    form [mdInput] {
+    form [matInput] {
       font-size: 14px; }
     `
   ]
@@ -37,7 +37,7 @@ export class InlineDialogComponent implements OnInit {
   isNumeric: boolean;
 
   constructor(
-    private dialogRef: MdDialogRef<InlineDialogComponent>,
+    private dialogRef: MatDialogRef<InlineDialogComponent>,
     private fb: FormBuilder
   ) { }
 

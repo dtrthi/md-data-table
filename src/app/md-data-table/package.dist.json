@@ -1,6 +1,6 @@
 {
   "name": "@dtrthi/md-data-table",
-  "version": "0.5.2",
+  "version": "0.5.3-1",
   "description": "A handmade material table for use before the official one published.",
   "main": "bundles/data-table.umd.js",
   "module": "index.js",
@@ -19,6 +19,6 @@
   "author": "dtrthi <thi.dtr@gmail.com>",
   "license": "MIT",
   "peerDependencies": {
-    "@angular/material": "^2.0.0-beta.11"
+    "@angular/material": "^2.0.0-beta.12"
   }
 }

@@ -26,7 +26,7 @@ $footer-height: 56px;
   border-radius: inherit;
 }
 
-md-progress-bar {
+mat-progress-bar {
   height: 1px;
 }
 
@@ -93,7 +93,7 @@ table {
       td {
         padding: 0;
 
-        md-paginator {
+        mat-paginator {
           margin-top: -1px;
         }
       }
