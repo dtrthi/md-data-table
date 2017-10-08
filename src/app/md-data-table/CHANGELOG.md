@@ -1,3 +1,7 @@
+## 0.5.3-1
+* reduce error when element height temporary not set  
+  cause by: ngAfterViewChecked now run before element rendered?
+
 ## 0.5.3
 
 * Replace md prefix by mat for compatibility with @angular/material@beta.12
