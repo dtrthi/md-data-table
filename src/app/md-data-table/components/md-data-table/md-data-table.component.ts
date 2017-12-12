@@ -233,7 +233,7 @@ export class MdDataTableComponent implements CollectionViewer, OnChanges, OnInit
       if (this._dataSource) {
         this.dataSource.connect(this).takeUntil(this._onDestroy)
           .subscribe(data => {
-            this.data = data;
+            this._data = data;
             this.updateRows();
           });
       }
@@ -280,11 +280,16 @@ export class MdDataTableComponent implements CollectionViewer, OnChanges, OnInit
     this.isRowSelectable = this.rowClick.observers.length > 0;
     this.filterSubscription = this.filterService.onFilter().subscribe(
       (value) => {
+        this.isLoading = true;
         // reset to first page
         this.paginatorComponent.pageIndex = 0;
+        this.filter.emit(value);
+        if (this._dataSource) {
+          return;
+        }
+
         this.filterValue = value;
         this.updateRows();
-        this.filter.emit(value);
       }
     );
 
@@ -387,6 +392,19 @@ export class MdDataTableComponent implements CollectionViewer, OnChanges, OnInit
           this.isLoading = false;
         }
       );
+    } else if (this._dataSource) {
+      if (Array.isArray(this._data) && this._data.length) {
+        this.rows.length = 0;
+        this._data.forEach(
+          (model: any, index: number) => {
+            if (index >= this.pageSize) {
+              return true;
+            }
+            this.rows[index] = new MdRowData(model);
+          }
+        );
+      }
+      this.isLoading = false;
     } else if (Array.isArray(this._data)) {
       const data = this.filterData();
       this.total = data.length;
@@ -443,7 +461,7 @@ export class MdDataTableComponent implements CollectionViewer, OnChanges, OnInit
     return data;
   }
 
-  _onPageChange(event) {
+  _onPageChange(event: PageEvent) {
     this.isLoading = true;
     this.pageChange.emit(event);
 

@@ -19,6 +19,23 @@
 
 * Fix calculated height to match with material 5. style.
 
+## 0.5.3-1
+* reduce error when element height temporary not set  
+  cause by: ngAfterViewChecked now run before element rendered?
+
+## 0.5.3
+
+* Replace md prefix by mat for compatibility with @angular/material@beta.12
+
+## 0.5.2
+
+* Support for paging data source, add demo component.
+
+## 0.5.1
+
+* Fix bug in pageChange event (#14)
+* Remove prefix beta, only use 3 level semver.
+
 ## 0.5.0-alpha.3 / 0.3.0-alpha.3.5
 
 * Revert change with updateHeaderWidth - only when use scroll table

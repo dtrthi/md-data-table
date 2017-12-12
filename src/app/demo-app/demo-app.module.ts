@@ -9,26 +9,32 @@ import { DataSourceWithFilterComponent } from './data-source-with-filter/data-so
 import { FilterableComponent } from './filterable/filterable.component';
 import { InlineEditingComponent } from './inline-editing/inline-editing.component';
 import { MdDataTableModule } from '../md-data-table/md-data-table.module';
+import { PagingDataSourceComponent } from './paging-data-source/paging-data-source.component';
+import { PagingDataSourceWithFilterComponent } from './paging-data-source-with-filter/paging-data-source-with-filter.component';
 
 @NgModule({
   declarations: [
     DataSourceComponent,
     DataSourceWithFilterComponent,
     FilterableComponent,
-    InlineEditingComponent
+    InlineEditingComponent,
+    PagingDataSourceComponent,
+    PagingDataSourceWithFilterComponent,
   ],
   imports: [
     CommonModule,
     FlexLayoutModule,
     MatCardModule,
     ReactiveFormsModule,
-    MdDataTableModule
+    MdDataTableModule,
   ],
   exports: [
     DataSourceComponent,
     DataSourceWithFilterComponent,
     FilterableComponent,
-    InlineEditingComponent
+    InlineEditingComponent,
+    PagingDataSourceComponent,
+    PagingDataSourceWithFilterComponent,
   ]
 })
 export class DemoAppModule { }
