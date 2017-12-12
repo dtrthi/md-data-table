@@ -299,7 +299,8 @@ export class MdDataTableComponent implements CollectionViewer, OnChanges, OnInit
     if (this.scrollable) {
       const h = this.elementRef.nativeElement.offsetHeight;
       if (!h) {
-        throw new Error('Must set width when using `fixedHeader`.');
+        console.warn && console.warn('Must set width when using `fixedHeader`.');
+        return;
       }
       if (this.height !== h) {
         this.height = h;

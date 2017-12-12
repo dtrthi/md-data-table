@@ -1,3 +1,7 @@
+## 0.6.0-alpha.2
+
+* Reduce error when table row is not initialized.
+
 ## 0.6.0-alpha.1
 
 ### Bug fixes
