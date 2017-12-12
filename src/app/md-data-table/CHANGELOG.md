@@ -1,3 +1,14 @@
+## 0.6.0-alpha.0
+
+### Features
+
+* Upgrade to @angular/material 5.0.0
+* Remove deprecated MaterialModule
+
+### Bug fixes
+
+* Fix calculated height to match with material 5. style.
+
 ## 0.5.0-alpha.3 / 0.3.0-alpha.3.5
 
 * Revert change with updateHeaderWidth - only when use scroll table
@@ -16,7 +27,7 @@
 
 * Use md-paginator from @angular/material.
 * Support MdDataSource.
-
+``
 ## 0.3.0-alpha.3.x
 
 ### Bug Fixes
