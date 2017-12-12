@@ -1,3 +1,9 @@
+## 0.6.0-alpha.1
+
+### Bug fixes
+
+* Correct pageChange property type.
+
 ## 0.6.0-alpha.0
 
 ### Features

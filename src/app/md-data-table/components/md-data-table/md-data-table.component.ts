@@ -24,7 +24,6 @@ import 'rxjs/add/operator/takeUntil';
 import { FilterService } from '../../services/filter.service';
 import { TableEventService } from '../../services/table-event.service';
 import { MdDataColumnComponent } from '../md-data-column/md-data-column.component';
-import { MdPagination } from '../../models/md-pagination';
 import { MdRowData } from '../../models/md-row-data';
 import { MdTableHeaderComponent } from '../md-table-header/md-table-header.component';
 import { Subject } from 'rxjs/Subject';
@@ -265,7 +264,7 @@ export class MdDataTableComponent implements CollectionViewer, OnChanges, OnInit
     }
   }
 
-  @Output() pageChange: EventEmitter<MdPagination> = new EventEmitter<MdPagination>();
+  @Output() pageChange: EventEmitter<PageEvent> = new EventEmitter<PageEvent>();
   @Output() rowClick: EventEmitter<any> = new EventEmitter<any>();
   @Output() filter = new EventEmitter<any>();
 
