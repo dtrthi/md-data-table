@@ -1,3 +1,7 @@
+## 0.6.0
+
+* Release feature: merge upgrade angular 5 with data source feature.
+
 ## 0.6.0-alpha.2
 
 * Reduce error when table row is not initialized.
