@@ -304,12 +304,12 @@ export class MdDataTableComponent implements CollectionViewer, OnChanges, OnInit
     if (this.scrollable) {
       const h = this.elementRef.nativeElement.offsetHeight;
       if (!h) {
-        console.error && console.error('Must set height when using `fixedHeader`.');
+        console.warn && console.warn('Must set width when using `fixedHeader`.');
         return;
       }
       if (this.height !== h) {
         this.height = h;
-        let dh = 1 /* host border */ + 56 * 2 + 1 + 1 /* one for progress bar */;
+        let dh = 1 /* host border */ + 56 * 2 /* top & bot */ + 2 /* ? */ + 1 /* one for progress bar */;
         if (this.header) {
           dh += 64 /* table header css height */;
         }

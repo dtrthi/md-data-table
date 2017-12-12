@@ -1,3 +1,24 @@
+## 0.6.0-alpha.2
+
+* Reduce error when table row is not initialized.
+
+## 0.6.0-alpha.1
+
+### Bug fixes
+
+* Correct pageChange property type.
+
+## 0.6.0-alpha.0
+
+### Features
+
+* Upgrade to @angular/material 5.0.0
+* Remove deprecated MaterialModule
+
+### Bug fixes
+
+* Fix calculated height to match with material 5. style.
+
 ## 0.5.3-1
 * reduce error when element height temporary not set  
   cause by: ngAfterViewChecked now run before element rendered?
@@ -33,7 +54,7 @@
 
 * Use md-paginator from @angular/material.
 * Support MdDataSource.
-
+``
 ## 0.3.0-alpha.3.x
 
 ### Bug Fixes

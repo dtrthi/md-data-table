@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CollectionViewer, DataSource } from '@angular/cdk/collections';
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
@@ -12,7 +12,7 @@ export class DataSourceComponent implements OnInit {
   data: any;
 
   constructor(
-    private http: Http
+    private http: HttpClient
   ) { }
 
   ngOnInit() {
@@ -22,12 +22,12 @@ export class DataSourceComponent implements OnInit {
 
 class DummyDataSource extends DataSource<any> {
 
-  constructor(private http: Http) {
+  constructor(private http: HttpClient) {
     super();
   }
 
   connect(collectionViewer: CollectionViewer): Observable<any[]> {
-    return this.http.get('assets/data.json').map(response => response.json());
+    return this.http.get<any[]>('assets/data.json');
   }
 
   disconnect(collectionViewer: CollectionViewer): void { }

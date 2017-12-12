@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -11,12 +11,12 @@ export class AppComponent implements OnInit {
   data: any;
   total = 0;
 
-  constructor(private http: Http) { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit() {
     return this.http.get('assets/data.json').subscribe(
       response => {
-        this.data = response.json();
+        this.data = response;
         this.total = this.data.length;
       }
     );
