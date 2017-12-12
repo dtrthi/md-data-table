@@ -9,16 +9,16 @@ import { FilterService } from '../../services/filter.service';
   selector: 'md-filter-button',
   template: `
     <form [formGroup]="filterForm">
-      <md-form-field floatPlaceholder="never" [@filterState2]="filterState">
-        <input mdInput i18n-placeholder placeholder="Filter" formControlName="input">
-      </md-form-field>
+      <mat-form-field floatPlaceholder="never" [@filterState2]="filterState">
+        <input matInput i18n-placeholder placeholder="Filter" formControlName="input">
+      </mat-form-field>
     </form>
-    <button md-icon-button i18n-mdTooltip mdTooltip="Filter"
+    <button mat-icon-button i18n-matTooltip matTooltip="Filter"
             [@filterState]="filterState"
             (@filterState.done)="onFilterStateDone($event)"
             (click)="toggleFilterState()">
-      <md-icon [hidden]="isOpening">search</md-icon>
-      <md-icon [hidden]="!isOpening">close</md-icon>
+      <mat-icon [hidden]="isOpening">search</mat-icon>
+      <mat-icon [hidden]="!isOpening">close</mat-icon>
     </button>
   `,
   styles: [
@@ -30,7 +30,7 @@ import { FilterService } from '../../services/filter.service';
       height: inherit;
       line-height: inherit; }
 
-    md-form-field {
+    mat-form-field {
       position: absolute;
       right: 0;
       top: -16px;

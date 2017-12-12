@@ -1,14 +1,19 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-import { MaterialModule } from '@angular/material';
+import { MatCardModule, MatDialogModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { MdDataTableModule } from './md-data-table/md-data-table.module';
 import { DemoAppModule } from './demo-app/demo-app.module';
+
+const MATERIAL_MODULES = [
+  MatCardModule,
+  MatDialogModule
+];
 
 @NgModule({
   declarations: [
@@ -19,8 +24,8 @@ import { DemoAppModule } from './demo-app/demo-app.module';
     BrowserAnimationsModule,
     FlexLayoutModule,
     FormsModule,
-    HttpModule,
-    MaterialModule,
+    HttpClientModule,
+    ...MATERIAL_MODULES,
     MdDataTableModule,
     DemoAppModule
   ],

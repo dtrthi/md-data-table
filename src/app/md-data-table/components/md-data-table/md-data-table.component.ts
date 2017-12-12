@@ -15,7 +15,7 @@ import {
   ViewChild
 } from '@angular/core';
 import { CollectionViewer, DataSource } from '@angular/cdk/collections';
-import { MdPaginator, PageEvent } from '@angular/material';
+import { MatPaginator, PageEvent } from '@angular/material';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -33,13 +33,13 @@ import { Subject } from 'rxjs/Subject';
   selector: 'md-data-table',
   template: `
     <ng-content select="md-table-header"></ng-content>
-    <md-progress-bar mode="indeterminate" [style.visibility]="isLoading ? 'visible' : 'hidden'"></md-progress-bar>
+    <mat-progress-bar mode="indeterminate" [style.visibility]="isLoading ? 'visible' : 'hidden'"></mat-progress-bar>
     <table class="mat-data-table-head" *ngIf="fixedHeader">
       <thead>
       <tr>
         <th *ngFor="let column of columns"
             [class.mat-numeric-column]="column.numeric">
-          <span mdTooltip="{{column.tooltip}}">{{column.title}}</span>
+          <span matTooltip="{{column.tooltip}}">{{column.title}}</span>
         </th>
       </tr>
       </thead>
@@ -50,7 +50,7 @@ import { Subject } from 'rxjs/Subject';
         <tr>
           <th *ngFor="let column of columns"
               [class.mat-numeric-column]="column.numeric">
-            <span mdTooltip="{{column.tooltip}}">{{column.title}}</span>
+            <span matTooltip="{{column.tooltip}}">{{column.title}}</span>
           </th>
         </tr>
         </thead>
@@ -63,7 +63,7 @@ import { Subject } from 'rxjs/Subject';
         <tfoot *ngIf="!fixedHeader">
         <tr>
           <td [attr.colspan]="columns.length">
-            <md-paginator [length]="total" [pageSize]="pageSize" (page)="_onPageChange($event)"></md-paginator>
+            <mat-paginator [length]="total" [pageSize]="pageSize" (page)="_onPageChange($event)"></mat-paginator>
           </td>
         </tr>
         </tfoot>
@@ -73,7 +73,7 @@ import { Subject } from 'rxjs/Subject';
       <tfoot>
       <tr>
         <td [attr.colspan]="columns.length">
-          <md-paginator [length]="total" [pageSize]="pageSize"  (page)="_onPageChange($event)"></md-paginator>
+          <mat-paginator [length]="total" [pageSize]="pageSize"  (page)="_onPageChange($event)"></mat-paginator>
         </td>
       </tr>
       </tfoot>
@@ -87,7 +87,7 @@ import { Subject } from 'rxjs/Subject';
       border-color: rgba(0, 0, 0, 0.12);
       border-radius: inherit; }
 
-    md-progress-bar {
+    mat-progress-bar {
       height: 1px; }
 
     table {
@@ -129,7 +129,7 @@ import { Subject } from 'rxjs/Subject';
       color: rgba(0, 0, 0, 0.54); }
     table tfoot tr td {
       padding: 0; }
-    table tfoot tr td md-paginator {
+    table tfoot tr td mat-paginator {
       margin-top: -1px; }
 
     .mat-table-container {
@@ -199,7 +199,7 @@ export class MdDataTableComponent implements CollectionViewer, OnChanges, OnInit
 
   @ViewChild('container') container;
   @ViewChild('body') body;
-  @ViewChild(MdPaginator) paginatorComponent: MdPaginator;
+  @ViewChild(MatPaginator) paginatorComponent: MatPaginator;
   @ContentChild(MdTableHeaderComponent) header;
   @ContentChildren(MdDataColumnComponent) columns;
   @Input() total = 0;

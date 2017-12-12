@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, Input, OnInit, ViewContainerRef } from '@angular/core';
-import { MdDialog, MdDialogConfig } from '@angular/material';
+import { MatDialog, MatDialogConfig } from '@angular/material';
 
 import { MdRowData } from '../../models/md-row-data';
 import { TableEventService } from '../../services/table-event.service';
@@ -46,7 +46,7 @@ export class MdDataTableRowComponent implements OnInit, AfterViewInit {
   @Input() columns: MdDataColumnComponent[];
 
   constructor(
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private viewContainerRef: ViewContainerRef,
     private tableEvent: TableEventService
   ) { }
@@ -61,7 +61,7 @@ export class MdDataTableRowComponent implements OnInit, AfterViewInit {
   onCellClick(column, cellEl) {
     if (column.editable !== false) {
       const boundingRect = cellEl.getBoundingClientRect();
-      const dialogConfig = new MdDialogConfig();
+      const dialogConfig = new MatDialogConfig();
       dialogConfig.viewContainerRef = this.viewContainerRef;
       dialogConfig.width = `${cellEl.offsetWidth}px`;
       dialogConfig.position = {

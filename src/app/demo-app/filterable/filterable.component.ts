@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-filterable',
@@ -10,13 +10,13 @@ export class FilterableComponent implements OnInit {
   data: any;
 
   constructor(
-    private http: Http
+    private http: HttpClient
   ) { }
 
   ngOnInit() {
     this.http.get('assets/data.json').subscribe(
       response => {
-        this.data = response.json();
+        this.data = response;
       }
     );
   }

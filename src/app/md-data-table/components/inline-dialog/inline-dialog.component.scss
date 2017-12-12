@@ -8,18 +8,18 @@ form {
   flex: 1;
   display: flex;
 
-  md-input-container {
+  mat-input-container {
     flex: 1;
     margin-top: -15px;
     margin-bottom: -18px;
     width: auto;
 
-    md-hint {
+    mat-hint {
       font-size: 80%;
     }
   }
 
-  [mdInput] {
+  [matInput] {
     font-size: $input-font-size;
   }
 }
