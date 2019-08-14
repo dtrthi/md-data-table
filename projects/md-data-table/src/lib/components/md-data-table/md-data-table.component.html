@@ -1,0 +1,46 @@
+<ng-content select="md-table-header"></ng-content>
+<mat-progress-bar mode="indeterminate" [style.visibility]="isLoading ? 'visible' : 'hidden'"></mat-progress-bar>
+<table class="mat-data-table-head" *ngIf="fixedHeader">
+  <thead>
+  <tr>
+    <th *ngFor="let column of columns"
+        [class.mat-numeric-column]="column.numeric">
+      <span matTooltip="{{column.tooltip}}">{{column.title}}</span>
+    </th>
+  </tr>
+  </thead>
+</table>
+<div #container class="mat-table-container">
+  <table class="mat-data-table" [class.fixed-header]="fixedHeader">
+    <thead>
+    <tr>
+      <th *ngFor="let column of columns"
+          [class.mat-numeric-column]="column.numeric">
+        <span matTooltip="{{column.tooltip}}">{{column.title}}</span>
+      </th>
+    </tr>
+    </thead>
+    <tbody #body>
+    <tr mdDataTableRow *ngFor="let row of rows"
+        [row]="row" [columns]="columns" (click)="_onClick(row)">
+    </tr>
+    <tr *ngIf="!rows || !rows.length"><td [attr.colspan]="columns.length" i18n>No data</td></tr>
+    </tbody>
+    <tfoot *ngIf="!fixedHeader">
+    <tr>
+      <td [attr.colspan]="columns.length">
+        <mat-paginator [length]="total" [pageSize]="pageSize" (page)="_onPageChange($event)"></mat-paginator>
+      </td>
+    </tr>
+    </tfoot>
+  </table>
+</div>
+<table class="mat-data-table-tail" *ngIf="fixedHeader">
+  <tfoot>
+  <tr>
+    <td [attr.colspan]="columns.length">
+      <mat-paginator [length]="total" [pageSize]="pageSize"  (page)="_onPageChange($event)"></mat-paginator>
+    </td>
+  </tr>
+  </tfoot>
+</table>

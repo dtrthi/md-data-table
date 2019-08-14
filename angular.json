@@ -22,7 +22,7 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "aot": true,
+            "aot": false,
             "assets": [
               "src/favicon.ico",
               "src/assets"
@@ -121,6 +121,41 @@
             "production": {
               "devServerTarget": "angular-cli:serve:production"
             }
+          }
+        }
+      }
+    },
+    "md-data-table": {
+      "projectType": "library",
+      "root": "projects/md-data-table",
+      "sourceRoot": "projects/md-data-table/src",
+      "prefix": "md",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/md-data-table/tsconfig.lib.json",
+            "project": "projects/md-data-table/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/md-data-table/src/test.ts",
+            "tsConfig": "projects/md-data-table/tsconfig.spec.json",
+            "karmaConfig": "projects/md-data-table/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/md-data-table/tsconfig.lib.json",
+              "projects/md-data-table/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         }
       }

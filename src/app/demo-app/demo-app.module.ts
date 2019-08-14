@@ -8,7 +8,7 @@ import { DataSourceComponent } from './data-source/data-source.component';
 import { DataSourceWithFilterComponent } from './data-source-with-filter/data-source-with-filter.component';
 import { FilterableComponent } from './filterable/filterable.component';
 import { InlineEditingComponent } from './inline-editing/inline-editing.component';
-import { MdDataTableModule } from '../md-data-table/md-data-table.module';
+import { MdDataTableModule } from '@dtrthi/md-data-table';
 import { PagingDataSourceComponent } from './paging-data-source/paging-data-source.component';
 import { PagingDataSourceWithFilterComponent } from './paging-data-source-with-filter/paging-data-source-with-filter.component';
 

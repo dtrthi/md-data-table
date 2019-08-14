@@ -5,9 +5,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule } from '@angular/forms';
 import { MatCardModule, MatDialogModule } from '@angular/material';
+import { MdDataTableModule } from '@dtrthi/md-data-table';
 
 import { AppComponent } from './app.component';
-import { MdDataTableModule } from './md-data-table/md-data-table.module';
 import { DemoAppModule } from './demo-app/demo-app.module';
 
 const MATERIAL_MODULES = [

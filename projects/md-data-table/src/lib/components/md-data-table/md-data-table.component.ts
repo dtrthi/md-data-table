@@ -27,141 +27,8 @@ import { MdTableHeaderComponent } from '../md-table-header/md-table-header.compo
 
 @Component({
   selector: 'md-data-table',
-  template: `
-    <ng-content select="md-table-header"></ng-content>
-    <mat-progress-bar mode="indeterminate" [style.visibility]="isLoading ? 'visible' : 'hidden'"></mat-progress-bar>
-    <table class="mat-data-table-head" *ngIf="fixedHeader">
-      <thead>
-      <tr>
-        <th *ngFor="let column of columns"
-            [class.mat-numeric-column]="column.numeric">
-          <span matTooltip="{{column.tooltip}}">{{column.title}}</span>
-        </th>
-      </tr>
-      </thead>
-    </table>
-    <div #container class="mat-table-container">
-      <table class="mat-data-table" [class.fixed-header]="fixedHeader">
-        <thead>
-        <tr>
-          <th *ngFor="let column of columns"
-              [class.mat-numeric-column]="column.numeric">
-            <span matTooltip="{{column.tooltip}}">{{column.title}}</span>
-          </th>
-        </tr>
-        </thead>
-        <tbody #body>
-        <tr mdDataTableRow *ngFor="let row of rows"
-            [row]="row" [columns]="columns" (click)="_onClick(row)">
-        </tr>
-        <tr *ngIf="!rows || !rows.length"><td [attr.colspan]="columns.length" i18n>No data</td></tr>
-        </tbody>
-        <tfoot *ngIf="!fixedHeader">
-        <tr>
-          <td [attr.colspan]="columns.length">
-            <mat-paginator [length]="total" [pageSize]="pageSize" (page)="_onPageChange($event)"></mat-paginator>
-          </td>
-        </tr>
-        </tfoot>
-      </table>
-    </div>
-    <table class="mat-data-table-tail" *ngIf="fixedHeader">
-      <tfoot>
-      <tr>
-        <td [attr.colspan]="columns.length">
-          <mat-paginator [length]="total" [pageSize]="pageSize"  (page)="_onPageChange($event)"></mat-paginator>
-        </td>
-      </tr>
-      </tfoot>
-    </table>
-  `,
-  styles: [
-    `:host {
-      display: block;
-      border-width: 1px;
-      border-style: solid;
-      border-color: rgba(0, 0, 0, 0.12);
-      border-radius: inherit; }
-
-    mat-progress-bar {
-      height: 1px; }
-
-    table {
-      width: 100%;
-      border-collapse: collapse; }
-    table tr {
-      position: relative;
-      white-space: nowrap;
-      line-height: 24px;
-      letter-spacing: 0;
-      font-size: 12px; }
-    table tr th {
-      overflow: hidden;
-      text-overflow: ellipsis; }
-    table tr th, table tr td {
-      box-sizing: border-box; }
-    table thead tr {
-      border: none;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-      font-size: 12px;
-      font-weight: 500;
-      color: rgba(0, 0, 0, 0.54);
-      height: 56px;
-      box-sizing: border-box; }
-    table thead tr th {
-      border: none;
-      cursor: default;
-      text-align: left;
-      padding: 0 12px; }
-    table thead tr th:first-of-type {
-      padding-left: 24px; }
-    table thead tr th:last-of-type {
-      padding-right: 24px; }
-    table thead tr th.mat-numeric-column {
-      text-align: right; }
-    table tfoot tr {
-      border-top: 1px solid rgba(0, 0, 0, 0.12);
-      font-size: 12px;
-      color: rgba(0, 0, 0, 0.54); }
-    table tfoot tr td {
-      padding: 0; }
-    table tfoot tr td mat-paginator {
-      margin-top: -1px; }
-
-    .mat-table-container {
-      max-width: 100%;
-      display: block;
-      overflow-x: auto;
-      font-family: Roboto, "Helvetica Neue", sans-serif; }
-    .mat-table-container .mat-data-table {
-      overflow: hidden;
-      white-space: nowrap;
-      text-align: center; }
-    .mat-table-container .mat-data-table.fixed-header {
-      border-top-width: 0;
-      border-bottom-width: 0; }
-    .mat-table-container .mat-data-table.fixed-header thead {
-      display: none; }
-    .mat-table-container .mat-data-table tbody tr {
-      border-top: 1px solid rgba(0, 0, 0, 0.12);
-      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-      font-size: 13px;
-      color: rgba(0, 0, 0, 0.87);
-      height: 48px; }
-    .mat-table-container .mat-data-table tbody tr:first-of-type {
-      border: none; }
-    .mat-table-container .mat-data-table tbody tr:hover {
-      background-color: #eeeeee; }
-    .mat-table-container .mat-data-table tbody tr .selected {
-      background-color: #f5f5f5; }
-
-    table.mat-data-table-tail {
-      margin-top: -1px; }
-
-    :host.row-selectable tbody tr {
-      cursor: pointer; }
-    `
-  ],
+  templateUrl: './md-data-table.component.html',
+  styleUrls: ['./md-data-table.component.scss'],
   providers: [FilterService, TableEventService]
 })
 export class MdDataTableComponent implements CollectionViewer, OnChanges, OnInit, AfterViewChecked, OnDestroy {
@@ -256,7 +123,7 @@ export class MdDataTableComponent implements CollectionViewer, OnChanges, OnInit
   }
 
   @Input() set filterable(value) {
-    if (value !== false) {
+    if (value !== false && this.header) {
       this.header.filterable = true;
     }
   }
@@ -294,14 +161,16 @@ export class MdDataTableComponent implements CollectionViewer, OnChanges, OnInit
       throw new Error('Can only use filter feature with table has header for now.');
     }
 
-    this.tableEvent.widthChange.subscribe(() => { if (this.scrollable) this.updateHeaderWidth(); });
+    this.tableEvent.widthChange.subscribe(() => { if (this.scrollable) { this.updateHeaderWidth(); } });
   }
 
   ngAfterViewChecked(): void {
     if (this.scrollable) {
       const h = this.elementRef.nativeElement.offsetHeight;
       if (!h) {
-        console.warn && console.warn('Must set width when using `fixedHeader`.');
+        if (console.warn) {
+          console.warn('Must set width when using `fixedHeader`.');
+        }
         return;
       }
       if (this.height !== h) {
@@ -410,7 +279,7 @@ export class MdDataTableComponent implements CollectionViewer, OnChanges, OnInit
       let currentPage = {begin: 0, end: this.pageSize - 1};
       if (pageEvent) {
         const begin = pageEvent.pageIndex * pageEvent.pageSize;
-        currentPage = {begin: begin, end: begin + pageEvent.pageSize - 1};
+        currentPage = {begin, end: begin + pageEvent.pageSize - 1};
       }
       data.some(
         (model: any, index: number) => {

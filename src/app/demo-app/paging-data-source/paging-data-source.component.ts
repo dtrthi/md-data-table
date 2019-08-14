@@ -5,7 +5,7 @@ import { PageEvent } from '@angular/material';
 import { merge, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 
-import { MdDataTableComponent } from '../../md-data-table/components/md-data-table/md-data-table.component';
+import { MdDataTableComponent } from '@dtrthi/md-data-table';
 
 @Component({
   selector: 'app-paging-data-source',

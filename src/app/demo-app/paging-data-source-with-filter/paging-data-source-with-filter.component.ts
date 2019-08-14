@@ -3,9 +3,9 @@ import { CollectionViewer, DataSource } from '@angular/cdk/collections';
 import { HttpClient } from '@angular/common/http';
 import { PageEvent } from '@angular/material';
 import { BehaviorSubject, merge, Observable, of } from 'rxjs';
-import { map, mergeMap, switchMapTo } from 'rxjs/operators';
+import { map, switchMapTo } from 'rxjs/operators';
 
-import { MdDataTableComponent } from '../../md-data-table/components/md-data-table/md-data-table.component';
+import { MdDataTableComponent } from '@dtrthi/md-data-table';
 
 @Component({
   selector: 'app-paging-data-source-with-filter',
