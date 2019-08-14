@@ -1,10 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CollectionViewer, DataSource } from '@angular/cdk/collections';
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { PageEvent } from '@angular/material';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/merge';
-import 'rxjs/add/operator/switchMap';
+import { merge, Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 
 import { MdDataTableComponent } from '../../md-data-table/components/md-data-table/md-data-table.component';
 
@@ -16,10 +15,10 @@ import { MdDataTableComponent } from '../../md-data-table/components/md-data-tab
 export class PagingDataSourceComponent implements OnInit {
   dataSource: any;
 
-  @ViewChild('dataTable') dataTable: MdDataTableComponent;
+  @ViewChild('dataTable', {static: false}) dataTable: MdDataTableComponent;
 
   constructor(
-    private http: Http,
+    private http: HttpClient,
   ) { }
 
   ngOnInit() {
@@ -31,25 +30,35 @@ class DummyDataSource extends DataSource<any> {
   total: number;
 
   constructor(
-    private http: Http,
+    private http: HttpClient,
     private dataTable: MdDataTableComponent,
   ) {
     super();
   }
 
   connect(collectionViewer: CollectionViewer): Observable<any[]> {
-    const firstPageOb = this.http.get('assets/data.json').map(response => {
-      this.total = response.json().length;
-      return response.json().filter((item, index) => index < 8);
-    });
+    const firstPageOb = this.http.get<any[]>('assets/data.json').pipe(
+      map(response => {
+        this.total = response.length;
+        return response.filter((item, index) => index < 8);
+      })
+    );
 
-    const pageChanged = this.dataTable.pageChange
-      .switchMap((pageEvent: PageEvent) => this.http.get('assets/data.json').map(response => {
-        this.total = response.json().length;
+    let pageEvent = new PageEvent();
+    pageEvent.pageIndex = 0;
+    pageEvent.pageSize = 10;
+    const pageChanged = this.dataTable.pageChange.pipe(
+      switchMap((evt: PageEvent) => {
+        pageEvent = evt;
+        return this.http.get<any[]>('assets/data.json');
+      }),
+      map(response => {
+        this.total = response.length;
         const startIndex = pageEvent.pageIndex * pageEvent.pageSize;
-        return response.json().splice(startIndex, pageEvent.pageSize);
-      }));
-    return Observable.merge(firstPageOb, pageChanged);
+        return response.splice(startIndex, pageEvent.pageSize);
+      })
+    );
+    return merge(firstPageOb, pageChanged);
   }
 
   disconnect(collectionViewer: CollectionViewer): void { }

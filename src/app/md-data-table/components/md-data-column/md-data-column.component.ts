@@ -30,11 +30,11 @@ export class MdDataColumnComponent implements OnInit {
   get template() {
     return this._customTemplate ? this._customTemplate : this._internalTemplate;
   }
-  @ContentChild(TemplateRef) _customTemplate: TemplateRef<MdTableCellDirective>;
+  @ContentChild(TemplateRef, {static: false}) _customTemplate: TemplateRef<MdTableCellDirective>;
 
   @Output() onFieldChange: EventEmitter<any> = new EventEmitter<any>();
 
-  @ViewChild('internalTemplate') _internalTemplate: TemplateRef<MdTableCellDirective>;
+  @ViewChild('internalTemplate', {static: false}) _internalTemplate: TemplateRef<MdTableCellDirective>;
 
   constructor() { }
 

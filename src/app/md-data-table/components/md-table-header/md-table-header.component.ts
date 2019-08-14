@@ -54,7 +54,7 @@ export class MdTableHeaderComponent implements OnInit {
 
   @Input() heading = '';
 
-  @ViewChild('wrapper') wrapper;
+  @ViewChild('wrapper', {static: true}) wrapper;
 
   constructor() { }
 

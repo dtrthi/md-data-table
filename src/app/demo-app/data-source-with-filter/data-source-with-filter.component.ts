@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CollectionViewer, DataSource } from '@angular/cdk/collections';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-data-source-with-filter',

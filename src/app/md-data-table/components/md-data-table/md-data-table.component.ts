@@ -16,17 +16,14 @@ import {
 } from '@angular/core';
 import { CollectionViewer, DataSource } from '@angular/cdk/collections';
 import { MatPaginator, PageEvent } from '@angular/material';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
-import 'rxjs/add/operator/takeUntil';
+import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { FilterService } from '../../services/filter.service';
 import { TableEventService } from '../../services/table-event.service';
 import { MdDataColumnComponent } from '../md-data-column/md-data-column.component';
 import { MdRowData } from '../../models/md-row-data';
 import { MdTableHeaderComponent } from '../md-table-header/md-table-header.component';
-import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'md-data-table',
@@ -196,10 +193,10 @@ export class MdDataTableComponent implements CollectionViewer, OnChanges, OnInit
       this.scrollable = true;
   }
 
-  @ViewChild('container') container;
-  @ViewChild('body') body;
-  @ViewChild(MatPaginator) paginatorComponent: MatPaginator;
-  @ContentChild(MdTableHeaderComponent) header;
+  @ViewChild('container', {static: true}) container;
+  @ViewChild('body', {static: true}) body;
+  @ViewChild(MatPaginator, {static: false}) paginatorComponent: MatPaginator;
+  @ContentChild(MdTableHeaderComponent, {static: false}) header;
   @ContentChildren(MdDataColumnComponent) columns;
   @Input() total = 0;
 
@@ -231,7 +228,7 @@ export class MdDataTableComponent implements CollectionViewer, OnChanges, OnInit
       this._dataSource = dataSource;
 
       if (this._dataSource) {
-        this.dataSource.connect(this).takeUntil(this._onDestroy)
+        this.dataSource.connect(this).pipe(takeUntil(this._onDestroy))
           .subscribe(data => {
             this._data = data;
             this.updateRows();

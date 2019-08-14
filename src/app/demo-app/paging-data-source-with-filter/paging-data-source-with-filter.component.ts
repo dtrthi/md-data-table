@@ -1,11 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CollectionViewer, DataSource } from '@angular/cdk/collections';
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { PageEvent } from '@angular/material';
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/switchMapTo';
+import { BehaviorSubject, merge, Observable, of } from 'rxjs';
+import { map, mergeMap, switchMapTo } from 'rxjs/operators';
 
 import { MdDataTableComponent } from '../../md-data-table/components/md-data-table/md-data-table.component';
 
@@ -17,10 +15,10 @@ import { MdDataTableComponent } from '../../md-data-table/components/md-data-tab
 export class PagingDataSourceWithFilterComponent implements OnInit {
   dataSource: DummyDataSource;
 
-  @ViewChild('dataTable') dataTable: MdDataTableComponent;
+  @ViewChild('dataTable', {static: false}) dataTable: MdDataTableComponent;
 
   constructor(
-    private http: Http,
+    private http: HttpClient,
   ) { }
 
   ngOnInit() {
@@ -41,23 +39,24 @@ class DummyDataSource extends DataSource<any> {
   set filter(filter: string) { this.filterChange.next(filter); }
 
   constructor(
-    private http: Http,
+    private http: HttpClient,
     private dataTable: MdDataTableComponent,
   ) {
     super();
   }
 
   connect(collectionViewer: CollectionViewer): Observable<any[]> {
-    const firstPageOb = Observable.of(null);
+    const firstPageOb = of(null);
 
     let pageEvent = new PageEvent();
     pageEvent.pageIndex = 0;
     pageEvent.pageSize = 10;
-    const pageChanged = this.dataTable.pageChange.map((evt: PageEvent) => pageEvent = evt);
+    const pageChanged = this.dataTable.pageChange.pipe(map((evt: PageEvent) => pageEvent = evt));
     const displayDataChanges = [firstPageOb, pageChanged, this.filterChange];
-    return Observable.merge(...displayDataChanges).switchMapTo(this.http.get('assets/data.json'))
-      .map(response => {
-        let filteredResponse: any[] = response.json();
+    return merge(...displayDataChanges).pipe(
+      switchMapTo(this.http.get('assets/data.json')),
+      map((response: any[]) => {
+        let filteredResponse: any[] = response;
         if (this.filter) {
           filteredResponse = filteredResponse.filter(value => {
             const s = this.filter
@@ -81,12 +80,13 @@ class DummyDataSource extends DataSource<any> {
                 return false;
               }
             );
-          })
+          });
         }
         this.total = filteredResponse.length;
         const startIndex = pageEvent.pageIndex * pageEvent.pageSize;
         return filteredResponse.splice(startIndex, pageEvent.pageSize);
-      });
+      }),
+    );
   }
 
   disconnect(collectionViewer: CollectionViewer): void { }

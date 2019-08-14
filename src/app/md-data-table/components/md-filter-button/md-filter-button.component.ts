@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/distinctUntilChanged';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 import { FilterService } from '../../services/filter.service';
 
@@ -80,10 +79,10 @@ export class MdFilterButtonComponent implements OnInit {
       input: []
     });
 
-    this.filterForm.get('input').valueChanges
-      .debounceTime(this.delay)
-      .distinctUntilChanged()
-      .subscribe((value) => this.filterService.doFilter(value));
+    this.filterForm.get('input').valueChanges.pipe(
+      debounceTime(this.delay),
+      distinctUntilChanged(),
+    ).subscribe((value) => this.filterService.doFilter(value));
   }
 
   toggleFilterState() {
